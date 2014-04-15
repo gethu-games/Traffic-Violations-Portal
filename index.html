@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html ng-app>
+<head>
+    <meta charset="UTF-8">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.5/angular.min.js"></script>
+    <script src="trafficListController.js"></script>
+    <style>
+        .videoRow {
+            overflow: hidden;
+            border-bottom: 4px solid #ddd;
+            margin: 10px;
+            padding:5px;
+        }
+        .violationCard {
+            width: 150px;
+            height: 90px;
+            float: left;
+            background: #eee;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+        .violationCount {
+            font-size: 3em;
+            display: block;
+        }
+    </style>
+    <title></title>
+</head>
+<body>
+    <div ng-controller="TrafficListController">
+        <form ng-submit="addNewVideo()">
+            <input type="text" ng-model="newVid.videoURL" placeholder="Video URL here"> <br/>
+            <input type="text" ng-model="newVid.locality" placeholder="locality"> <br/>
+            <input type="text" ng-model="newVid.town" placeholder="town"> <br/>
+            <input type="text" ng-model="newVid.city" placeholder="city"> <br/>
+            <input type="text" ng-model="newVid.pincode" placeholder="Pin Code" value="600015"> <br/>
+            <input type="text" ng-model="newVid.time" placeholder="yyyy-mm-dd hh:mm" value="2014-03-20 08:20"> <br/>
+            <input type="SUBMIT" value="Add Video">
+        </form>
+        <hr/>
+        <span> Wow !! We got {{videos.length}} videos in total and only {{1000 - videos.length}} to go </span>
+        <div ng-repeat="vid in videos" class="videoRow">
+            <p style="display: block">Video uploaded by <b>{{vid.uploadedBy}}</b> and analyzed by <b>{{vid.analyzedBy}}</b> </p>
+            <div style="height: 100px; display: block">
+                <div style="float: left"> <img src="" width="150" height="100" style="float: left"> </div>
+                <div style="float: left; overflow-x: auto; overflow-y: hidden">
+                    <div class="violationCard"> <b class="violationCount">2</b> Signal Jump </div>
+                    <div class="violationCard"> <b class="violationCount">12</b> Stop Line </div>
+                    <div class="violationCard"> <b class="violationCount">8</b> No Helmet </div>
+                    <div class="violationCard"> <b class="violationCount">1</b> Sun Screen </div>
+                    <div class="violationCard"> <b class="violationCount">3</b> Improper Number Plate </div>
+                </div> 
+            </div>
+            <p style="display: block"> {{vid.time}} at {{vid.locality + ', ' + vid.town}} </p>
+        </div>
+    </div>
+</body>
+</html>
