@@ -1,5 +1,6 @@
+var trafficApp = angular.module('TrafficApp', []);
 
-function TrafficListController($scope, $http, $log) {
+trafficApp.controller('TrafficListController', function($scope, $http, $log) {
 
     // sample video data
     $scope.videos = [{
@@ -60,5 +61,6 @@ function TrafficListController($scope, $http, $log) {
             $log.log(data);
         });
     };
-}
+
+});
 
