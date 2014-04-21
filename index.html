@@ -10,44 +10,238 @@
     <script>
         OAuth.initialize('vtV0ch3lZ_SPyiVNi4G2LVGrrFg');
     </script>
+    <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <title></title>
 </head>
 
 <body>
-    <div class="topUserBar" ng-controller="UserProfileController">
-        <a href="#" id="loginButton" ng-click="oAuthLogin()">Login</a>
+
+    <div ng-controller="UserProfileController">
+        <div class="topUserBar">
+            <a href="#" id="loginButton" class="barButton" ng-click="login()" ng-show="user.name == ''">Login</a>
+            <a href="#" id="profileButton" class="barButton" ng-show="user.name != ''">{{user.name}}</a>
+        </div>
     </div>
+
     <h1>Traffic Violation Portal</h1>
 
-    <div ng-controller="TrafficListController">
-        <form ng-submit="addNewVideo()">
-            <input type="text" ng-model="newVid.videoURL" placeholder="Video URL here"> <br/>
-            <input type="text" ng-model="newVid.locality" placeholder="locality"> <br/>
-            <input type="text" ng-model="newVid.town" placeholder="town"> <br/>
-            <input type="text" ng-model="newVid.city" placeholder="city"> <br/>
-            <input type="text" ng-model="newVid.pincode" placeholder="Pin Code" value="600015"> <br/>
-            <input type="text" ng-model="newVid.time" placeholder="yyyy-mm-dd hh:mm" value="2014-03-20 08:20"> <br/>
-            <input type="SUBMIT" value="Add Video" class="btn-primary">
-        </form>
+    <div class="singleColumn">
 
-        <hr/>
+    <div ng-controller="UserProfileController">
 
-        <span> Wow !! We got {{videos.length}} videos in total and only {{1000 - videos.length}} to go </span>
-        <div ng-repeat="vid in videos" class="videoRow">
-            <p style="display: block">Video uploaded by <b>{{vid.uploadedBy}}</b> and analyzed by <b>{{vid.analyzedBy}}</b> </p>
-            <div style="height: 100px; display: block">
-                <div style="float: left"> <img src="" width="150" height="100" style="float: left"> </div>
-                <div style="float: left; overflow-x: auto; overflow-y: hidden">
-                    <div class="violationCard"> <b class="violationCount">2</b> Signal Jump </div>
-                    <div class="violationCard"> <b class="violationCount">12</b> Stop Line </div>
-                    <div class="violationCard"> <b class="violationCount">8</b> No Helmet </div>
-                    <div class="violationCard"> <b class="violationCount">1</b> Sun Screen </div>
-                    <div class="violationCard"> <b class="violationCount">3</b> Improper Number Plate </div>
-                </div> 
+        <div class="card">
+            <h2>
+                Top Contributors
+                <span style="float: right">
+                    <select>
+                        <option value="Individual">Individual</option>
+                        <option value="Organization">Organization</option>
+                        <option value="Region">Region</option>
+                    </select>
+                </span>
+            </h2>
+
+            <div class="cardColumn33">
+                <h3>This week</h3>
+                <table width="100%">
+                    <tr>
+                        <td class="left">Bhagath Singh</td>
+                        <td class="right">100</td>
+                    </tr>
+                    <tr>
+                        <td class="left">Bhagath Singh</td>
+                        <td class="right">100</td>
+                    </tr>
+                    <tr>
+                        <td class="left">Bhagath Singh</td>
+                        <td class="right">100</td>
+                    </tr>
+                    <tr>
+                        <td class="left">Bhagath Singh</td>
+                        <td class="right">100</td>
+                    </tr>
+                    <tr>
+                        <td class="left">Bhagath Singh</td>
+                        <td class="right">100</td>
+                    </tr>
+                    <tr>
+                        <td class="left">Bhagath Singh</td>
+                        <td class="right">100</td>
+                    </tr>
+                    <tr>
+                        <td class="left">Bhagath Singh</td>
+                        <td class="right">100</td>
+                    </tr>
+                    <tr>
+                        <td class="left">Bhagath Singh</td>
+                        <td class="right">100</td>
+                    </tr>
+                    <tr>
+                        <td class="left">Bhagath Singh</td>
+                        <td class="right">100</td>
+                    </tr>
+                    <tr>
+                        <td class="left">Bhagath Singh</td>
+                        <td class="right">100</td>
+                    </tr>
+                </table>
             </div>
-            <p style="display: block"> {{vid.time}} at {{vid.locality + ', ' + vid.town}} </p>
+
+            <div class="cardColumn33">
+                <h3>This month</h3>
+                <table width="100%">
+                    <tr>
+                        <td class="left">Bhagath Singh</td>
+                        <td class="right">100</td>
+                    </tr>
+                    <tr>
+                        <td class="left">Bhagath Singh</td>
+                        <td class="right">100</td>
+                    </tr>
+                    <tr>
+                        <td class="left">Bhagath Singh</td>
+                        <td class="right">100</td>
+                    </tr>
+                    <tr>
+                        <td class="left">Bhagath Singh</td>
+                        <td class="right">100</td>
+                    </tr>
+                    <tr>
+                        <td class="left">Bhagath Singh</td>
+                        <td class="right">100</td>
+                    </tr>
+                    <tr>
+                        <td class="left">Bhagath Singh</td>
+                        <td class="right">100</td>
+                    </tr>
+                    <tr>
+                        <td class="left">Bhagath Singh</td>
+                        <td class="right">100</td>
+                    </tr>
+                    <tr>
+                        <td class="left">Bhagath Singh</td>
+                        <td class="right">100</td>
+                    </tr>
+                    <tr>
+                        <td class="left">Bhagath Singh</td>
+                        <td class="right">100</td>
+                    </tr>
+                    <tr>
+                        <td class="left">Bhagath Singh</td>
+                        <td class="right">100</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="cardColumn33" style="float:right; border: 0px">
+                <h3>This Year</h3>
+                <table width="100%">
+                    <tr>
+                        <td class="left">Bhagath Singh</td>
+                        <td class="right">100</td>
+                    </tr>
+                    <tr>
+                        <td class="left">Bhagath Singh</td>
+                        <td class="right">100</td>
+                    </tr>
+                    <tr>
+                        <td class="left">Bhagath Singh</td>
+                        <td class="right">100</td>
+                    </tr>
+                    <tr>
+                        <td class="left">Bhagath Singh</td>
+                        <td class="right">100</td>
+                    </tr>
+                    <tr>
+                        <td class="left">Bhagath Singh</td>
+                        <td class="right">100</td>
+                    </tr>
+                    <tr>
+                        <td class="left">Bhagath Singh</td>
+                        <td class="right">100</td>
+                    </tr>
+                    <tr>
+                        <td class="left">Bhagath Singh</td>
+                        <td class="right">100</td>
+                    </tr>
+                    <tr>
+                        <td class="left">Bhagath Singh</td>
+                        <td class="right">100</td>
+                    </tr>
+                    <tr>
+                        <td class="left">Bhagath Singh</td>
+                        <td class="right">100</td>
+                    </tr>
+                    <tr>
+                        <td class="left">Bhagath Singh</td>
+                        <td class="right">100</td>
+                    </tr>
+                </table>
+            </div>
+
         </div>
+    </div>
+
+    <div ng-controller="TrafficListController">
+
+        <div class="card">
+            <h2>
+                Violation Videos
+
+                <div class="barButton" style="margin-top:-5px; margin-right: -5px; height: 26px"> Upload </div>
+
+                <span style="float: right">
+                    <select>
+                        <option value="Saidapet">Saidapet</option>
+                        <option value="Guindy">Guindy</option>
+                        <option value="Velachery">Region</option>
+                    </select>
+                </span>
+
+                <span style="float: right">
+                    <select>
+                        <option value="2014-01">January, 2014</option>
+                        <option value="2014-02">February, 2014</option>
+                        <option value="2014-03">March, 2014</option>
+                    </select>
+                </span>
+
+            </h2>
+
+            <!--
+            <form ng-submit="addNewVideo()">
+                <input type="text" ng-model="newVid.videoURL" placeholder="Video URL here"> <br/>
+                <input type="text" ng-model="newVid.locality" placeholder="locality"> <br/>
+                <input type="text" ng-model="newVid.town" placeholder="town"> <br/>
+                <input type="text" ng-model="newVid.city" placeholder="city"> <br/>
+                <input type="text" ng-model="newVid.pincode" placeholder="Pin Code" value="600015"> <br/>
+                <input type="text" ng-model="newVid.time" placeholder="yyyy-mm-dd hh:mm" value="2014-03-20 08:20"> <br/>
+                <input type="SUBMIT" value="Add Video" class="btn-primary">
+            </form>
+            -->
+
+            <span> Wow !! We got {{videos.length}} videos in total and only {{1000 - videos.length}} to go </span>
+
+            <hr>
+
+            <div ng-repeat="vid in videos" class="videoRow">
+                <p style="display: block">Video uploaded by <b>{{vid.uploadedBy}}</b> and analyzed by <b>{{vid.analyzedBy}}</b> </p>
+                <div style="height: 100px; display: block">
+                    <div style="float: left"> <img src="" width="150" height="100" style="float: left"> </div>
+                    <div style="float: left; overflow-x: auto; overflow-y: hidden; width: 640px; height: 100px">
+                        <div class="violationCard"> <b class="violationCount">2</b> Signal Jump </div>
+                        <div class="violationCard"> <b class="violationCount">12</b> Stop Line </div>
+                        <div class="violationCard"> <b class="violationCount">8</b> No Helmet </div>
+                        <div class="violationCard"> <b class="violationCount">1</b> Sun Screen </div>
+                        <div class="violationCard"> <b class="violationCount">3</b> Improper Number Plate </div>
+                    </div> 
+                </div>
+                <p style="display: block"> {{vid.time}} at {{vid.locality + ', ' + vid.town}} </p>
+            </div>
+        </div>
+    </div>
+
     </div>
 
 </body>

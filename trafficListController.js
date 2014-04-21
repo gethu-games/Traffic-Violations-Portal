@@ -19,7 +19,7 @@ trafficApp.controller('TrafficListController', function($scope, $http, $log) {
         }]
     }];
 
-    $http({ method: 'GET', url: 'http://localhost/gfoi/traffic/api/video.php' }).
+    $http({ method: 'GET', url: 'api/video.php' }).
         success(function (data, status, headers, config) {
             //$log.log("success");
             //$log.log(data);
@@ -49,7 +49,7 @@ trafficApp.controller('TrafficListController', function($scope, $http, $log) {
         var json = JSON.stringify(vid);
 
         $http({
-            url: 'http://localhost/gfoi/traffic/api/video.php',
+            url: 'api/video.php',
             method: "POST",
             data: json,
             headers: {'Content-Type': 'application/json'}
