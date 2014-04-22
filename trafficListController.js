@@ -1,6 +1,6 @@
-var trafficApp = angular.module('TrafficApp', []);
+var trafficApp = angular.module('TrafficApp', ['fundoo.services']);
 
-trafficApp.controller('TrafficListController', function($scope, $http, $log) {
+trafficApp.controller('TrafficListController', ['$scope', '$http', '$log', 'createDialog', function($scope, $http, $log, createDialogService) {
 
     // sample video data
     $scope.videos = [{
@@ -20,19 +20,30 @@ trafficApp.controller('TrafficListController', function($scope, $http, $log) {
     }];
 
     $http({ method: 'GET', url: 'api/video.php' }).
-        success(function (data, status, headers, config) {
-            //$log.log("success");
-            //$log.log(data);
-            $scope.videos = data;
-        }).
-        error(function (data, status, headers, config) {
-            $log.log("error");
-            $log.log(data);
-            $scope.videos = [];
+    success(function (data, status, headers, config) {
+        //$log.log("success");
+        //$log.log(data);
+        $scope.videos = data;
+    }).
+    error(function (data, status, headers, config) {
+        $log.log("error");
+        $log.log(data);
+        $scope.videos = [];
+    });
+
+    $scope.upload = function() {
+        createDialogService('simpleModal.html', {
+          id: 'simpleDialog',
+          title: 'Upload Video to save India',
+          backdrop: true,
+          controller: 'TrafficListController',
+          success: {label: 'Success', fn: function() {console.log('Simple modal closed');}}
         });
+    };
 
     $scope.addNewVideo = function() {
         var vid = {};
+        $log.log($scope);
         vid["videoURL"] = $scope.newVid.videoURL;
         vid["thumbURL"] = $scope.newVid.videoURL;
         vid["uploadedBy"] = "someone";
@@ -42,9 +53,6 @@ trafficApp.controller('TrafficListController', function($scope, $http, $log) {
         vid["city"] = $scope.newVid.city;
         vid["pincode"] = $scope.newVid.pincode;
         vid["time"] = $scope.newVid.time;
-
-        $log.log(vid);
-        $log.log(JSON.stringify(vid));
 
         var json = JSON.stringify(vid);
 
@@ -62,5 +70,5 @@ trafficApp.controller('TrafficListController', function($scope, $http, $log) {
         });
     };
 
-});
+}]);
 
