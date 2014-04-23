@@ -7,6 +7,7 @@
     <script src="oauth.js"></script>
     <script src="trafficListController.js"></script>
     <script src="userProfileController.js"></script>
+    <script src="leaderboardService.js"></script>
     <script src="leaderboardController.js"></script>
     <script src="js/createDialog.js"></script>
     <script>
@@ -37,10 +38,7 @@
             <h2>
                 Top Contributors
                 <span style="float: right">
-                    <select>
-                        <option value="Individual">Individual</option>
-                        <option value="Organization">Organization</option>
-                        <option value="Region">Region</option>
+                    <select ng-model="data.name" ng-init="data.name = data.name || data[0].id" ng-options="item.id as item.name for item in data" ng-change="clicker(data.name)" >
                     </select>
                 </span>
             </h2>
@@ -48,45 +46,9 @@
             <div class="cardColumn33">
                 <h3>This week</h3>
                 <table width="100%">
-                    <tr>
-                        <td class="left">Bhagath Singh</td>
-                        <td class="right">100</td>
-                    </tr>
-                    <tr>
-                        <td class="left">Bhagath Singh</td>
-                        <td class="right">100</td>
-                    </tr>
-                    <tr>
-                        <td class="left">Bhagath Singh</td>
-                        <td class="right">100</td>
-                    </tr>
-                    <tr>
-                        <td class="left">Bhagath Singh</td>
-                        <td class="right">100</td>
-                    </tr>
-                    <tr>
-                        <td class="left">Bhagath Singh</td>
-                        <td class="right">100</td>
-                    </tr>
-                    <tr>
-                        <td class="left">Bhagath Singh</td>
-                        <td class="right">100</td>
-                    </tr>
-                    <tr>
-                        <td class="left">Bhagath Singh</td>
-                        <td class="right">100</td>
-                    </tr>
-                    <tr>
-                        <td class="left">Bhagath Singh</td>
-                        <td class="right">100</td>
-                    </tr>
-                    <tr>
-                        <td class="left">Bhagath Singh</td>
-                        <td class="right">100</td>
-                    </tr>
-                    <tr>
-                        <td class="left">Bhagath Singh</td>
-                        <td class="right">100</td>
+                    <tr ng-repeat="member in selectedOption.monthly">
+                        <td class="left">{{member.name}}</td>
+                        <td class="right">{{member.point}}</td>
                     </tr>
                 </table>
             </div>
@@ -94,45 +56,9 @@
             <div class="cardColumn33">
                 <h3>This month</h3>
                 <table width="100%">
-                    <tr>
-                        <td class="left">Bhagath Singh</td>
-                        <td class="right">100</td>
-                    </tr>
-                    <tr>
-                        <td class="left">Bhagath Singh</td>
-                        <td class="right">100</td>
-                    </tr>
-                    <tr>
-                        <td class="left">Bhagath Singh</td>
-                        <td class="right">100</td>
-                    </tr>
-                    <tr>
-                        <td class="left">Bhagath Singh</td>
-                        <td class="right">100</td>
-                    </tr>
-                    <tr>
-                        <td class="left">Bhagath Singh</td>
-                        <td class="right">100</td>
-                    </tr>
-                    <tr>
-                        <td class="left">Bhagath Singh</td>
-                        <td class="right">100</td>
-                    </tr>
-                    <tr>
-                        <td class="left">Bhagath Singh</td>
-                        <td class="right">100</td>
-                    </tr>
-                    <tr>
-                        <td class="left">Bhagath Singh</td>
-                        <td class="right">100</td>
-                    </tr>
-                    <tr>
-                        <td class="left">Bhagath Singh</td>
-                        <td class="right">100</td>
-                    </tr>
-                    <tr>
-                        <td class="left">Bhagath Singh</td>
-                        <td class="right">100</td>
+                    <tr ng-repeat="member in selectedOption.monthly">
+                        <td class="left">{{member.name}}</td>
+                        <td class="right">{{member.point}}</td>
                     </tr>
                 </table>
             </div>
@@ -140,45 +66,9 @@
             <div class="cardColumn33" style="float:right; border: 0px">
                 <h3>This Year</h3>
                 <table width="100%">
-                    <tr>
-                        <td class="left">Bhagath Singh</td>
-                        <td class="right">100</td>
-                    </tr>
-                    <tr>
-                        <td class="left">Bhagath Singh</td>
-                        <td class="right">100</td>
-                    </tr>
-                    <tr>
-                        <td class="left">Bhagath Singh</td>
-                        <td class="right">100</td>
-                    </tr>
-                    <tr>
-                        <td class="left">Bhagath Singh</td>
-                        <td class="right">100</td>
-                    </tr>
-                    <tr>
-                        <td class="left">Bhagath Singh</td>
-                        <td class="right">100</td>
-                    </tr>
-                    <tr>
-                        <td class="left">Bhagath Singh</td>
-                        <td class="right">100</td>
-                    </tr>
-                    <tr>
-                        <td class="left">Bhagath Singh</td>
-                        <td class="right">100</td>
-                    </tr>
-                    <tr>
-                        <td class="left">Bhagath Singh</td>
-                        <td class="right">100</td>
-                    </tr>
-                    <tr>
-                        <td class="left">Bhagath Singh</td>
-                        <td class="right">100</td>
-                    </tr>
-                    <tr>
-                        <td class="left">Bhagath Singh</td>
-                        <td class="right">100</td>
+                    <tr ng-repeat="member in selectedOption.yearly">
+                        <td class="left">{{member.name}}</td>
+                        <td class="right">{{member.point}}</td>
                     </tr>
                 </table>
             </div>

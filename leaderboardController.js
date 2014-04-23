@@ -1,6 +1,13 @@
 var trafficApp = angular.module('TrafficApp');
 
-trafficApp.controller('LeaderboardController', function($scope, $http, $log) {
+trafficApp.controller('LeaderboardController', ['$scope', '$http', '$log', 'leaderboardData', function($scope, $http, $log, leaderboardData) {
+
+    $scope.data = leaderboardData.getData();
+
+    $scope.clicker = function(id) {
+        $scope.selectedOption = leaderboardData.getSelectedData(id);
+    };
+    $scope.clicker(0);
 
     $scope.upload = function() {
     };
@@ -8,5 +15,5 @@ trafficApp.controller('LeaderboardController', function($scope, $http, $log) {
     $scope.addNewVideo = function() {
     };
 
-});
+}]);
 
