@@ -5,10 +5,12 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.5/angular.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
     <script src="oauth.js"></script>
+    <script src="TrafficApp.js"></script>
     <script src="trafficListController.js"></script>
     <script src="userProfileController.js"></script>
     <script src="leaderboardService.js"></script>
     <script src="leaderboardController.js"></script>
+    <script src="complaintController.js"></script>
     <script src="js/createDialog.js"></script>
     <script>
         OAuth.initialize('vtV0ch3lZ_SPyiVNi4G2LVGrrFg');
@@ -82,7 +84,7 @@
             <h2>
                 Violation Videos
 
-                <div class="barButton" ng-click="upload()" style="margin-top:-5px; margin-right: -5px; height: 26px"> Upload </div>
+                <div class="barButton" ng-click="upload()" style="line-height: 20px"> Upload </div>
 
                 <span style="float: right">
                     <select>
@@ -107,15 +109,17 @@
             <hr>
 
             <div ng-repeat="vid in videos" class="videoRow">
-                <p style="display: block">Video uploaded by <b>{{vid.uploadedBy}}</b> and analyzed by <b>{{vid.analyzedBy}}</b> </p>
-                <div style="height: 100px; display: block">
-                    <div style="float: left"> <img src="" width="150" height="100" style="float: left"> </div>
-                    <div style="float: left; overflow-x: auto; overflow-y: hidden; width: 640px; height: 100px">
+                <h3 class="videoHeader" style="font-weight: normal; text-align: left; display: block; height: 28px; margin: 0px;">
+                    <p style="display: inline">Video uploaded by <b>{{vid.uploadedBy}}</b> and analyzed by <b>{{vid.analyzedBy}}</b> </p>
+                    <div class="barButton" ng-click="analyze(vid)" style="line-height: 10px; float: right; display:inline"> Analyze </div>
+                </h3>
+                <div style="height: 100px; display: block; width: 1000px ">
+                    <div style="float: left; display:inline"> <img src="{{vid.thumbURL}}" width="150" height="80" style="float: left; width: 150px; height: 100px"> </div>
+                    <div style="float: left; overflow-x: auto; width: 640px; height: 100px; white-space: nowrap; display:inline">
                         <div class="violationCard"> <b class="violationCount">2</b> Signal Jump </div>
                         <div class="violationCard"> <b class="violationCount">12</b> Stop Line </div>
                         <div class="violationCard"> <b class="violationCount">8</b> No Helmet </div>
                         <div class="violationCard"> <b class="violationCount">1</b> Sun Screen </div>
-                        <div class="violationCard"> <b class="violationCount">3</b> Improper Number Plate </div>
                     </div> 
                 </div>
                 <p style="display: block"> {{vid.time}} at {{vid.locality + ', ' + vid.town}} </p>

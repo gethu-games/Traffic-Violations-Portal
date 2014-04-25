@@ -1,0 +1,18 @@
+<div class="row-fluid">
+    <div> Video Taken at {{video.locality}} </div>
+    <table width="100%">
+        <tr ng-repeat="item in complaints">
+            <td>{{item.vehicleRegNo}}</td>
+            <td>{{item.vehicleType}}</td>
+            <td>{{item.violationType}}</td>
+            <td>{{item.timeSlice}}</td>
+        </tr>
+    </table>
+    <form ng-submit="addNewComplaint()">
+        <input type="text" style="width:140px" ng-model="newComplaint.vehicleRegNo" placeholder="Vehicle Registration Number"> 
+        <input type="text" style="width:100px" ng-model="newComplaint.vehicleType" placeholder="vehicle Type"> 
+        <input type="text" style="width:120px" ng-model="newComplaint.violationType" placeholder="violation Type"> 
+        <input type="text" style="width:40px" ng-model="newComplaint.timeSlice" placeholder="Time Slice in seconds"> 
+        <input type="SUBMIT" value="+" class="btn-primary">
+    </form>
+</div>

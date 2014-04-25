@@ -1,4 +1,4 @@
-var trafficApp = angular.module('TrafficApp', ['fundoo.services']);
+var trafficApp = angular.module('TrafficApp');
 
 trafficApp.controller('TrafficListController', ['$scope', '$http', '$log', 'createDialog', function($scope, $http, $log, createDialogService) {
 
@@ -19,6 +19,8 @@ trafficApp.controller('TrafficListController', ['$scope', '$http', '$log', 'crea
         }]
     }];
 
+    $scope.newVid = {};
+
     $http({ method: 'GET', url: 'api/video.php' }).
     success(function (data, status, headers, config) {
         //$log.log("success");
@@ -38,6 +40,18 @@ trafficApp.controller('TrafficListController', ['$scope', '$http', '$log', 'crea
           backdrop: true,
           controller: 'TrafficListController',
           success: {label: 'Success', fn: function() {console.log('Simple modal closed');}}
+        });
+    };
+
+    $scope.analyze = function(vid) {
+        createDialogService('analyzeModal.html', {
+          id: 'analyzeDialog',
+          title: 'Analyze Video',
+          backdrop: true,
+          controller: 'ComplaintListController',
+          success: {label: 'Success', fn: function() {console.log('Simple modal closed');}}
+        }, {
+            video: vid
         });
     };
 

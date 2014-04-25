@@ -104,9 +104,11 @@ h1, h2, h3, h4, h5, h6 {
     background: #eee;
     border: 1px solid #ddd;
     text-align: center;
+    display: inline-block;
 }
 
 .violationCount {
+    line-height: 50px;
     font-size: 3em;
     display: block;
 }
