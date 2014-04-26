@@ -40,7 +40,7 @@ function loginUser($host, $username, $password, $db_name) {
     $dbResult       =   mysql_query($sql);
 
     if(mysql_num_rows($dbResult)){
-        $result        =   array('message' => 'success');
+        $result        =   array('message' => 'existingUser');
     } else {
         $sql        =   "INSERT INTO user (email, name) VALUES ('" . $obj->email . "','" . $obj->name . "')";
         $db_insert  =   mysql_query($sql);

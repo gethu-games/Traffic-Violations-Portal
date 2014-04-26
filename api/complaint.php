@@ -22,13 +22,13 @@ along with ACR-Timeline-Infograph. If not, see <http://www.gnu.org/licenses/>.
 require_once('db.php');
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    insertVideo($host, $username, $password, $db_name);
+    insertComplaint($host, $username, $password, $db_name);
 } else if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-    returnVideos($host, $username, $password, $db_name);
+    returnComplaints($host, $username, $password, $db_name);
 }
 
 
-function insertVideo($host, $username, $password, $db_name) {
+function insertComplaint($host, $username, $password, $db_name) {
 
     //echo("insert Video");
 
@@ -37,10 +37,10 @@ function insertVideo($host, $username, $password, $db_name) {
 
     $json           =   file_get_contents('php://input');
     $obj            =   json_decode($json);
-    //print_r($obj);
 
-    $sql            =   "INSERT INTO video (videoURL, thumbURL, uploadedBy, analyzedBy, locality, town, city, pincode, time) VALUES ( '" . $obj->videoURL . "','" . $obj->thumbURL . "','" . $obj->uploadedBy . "','" . $obj->analyzedBy . "','" . $obj->locality . "','" . $obj->town . "','" . $obj->city . "'," . $obj->pincode . ",'" . $obj->time . "')";
-    //echo ($sql);
+    $sql            =   "INSERT INTO complaint (videoID, vehicleRegNo, vehicleType, violationType, timeSlice, analyzedBy) VALUES ( '" . $obj->videoID . "','" . $obj->vehicleRegNo . "','" . $obj->vehicleType . "','" . $obj->violationType . "','" . $obj->timeSlice . "','" . $obj->analyzedBy . "')";
+
+    echo($sql);
 
     $db_insert      =   mysql_query($sql);
 
@@ -48,7 +48,7 @@ function insertVideo($host, $username, $password, $db_name) {
         die('Could not connect - event insert failed: ' . mysql_error());
     } else {
         $json       =   array();
-        $json['videoID'] = mysql_insert_id();
+        $json['complaintID'] = mysql_insert_id();
         echo json_encode($json);
     }
 
@@ -56,13 +56,17 @@ function insertVideo($host, $username, $password, $db_name) {
 
 }
 
-function returnVideos($host, $username, $password, $db_name) {
+function returnComplaints($host, $username, $password, $db_name) {
 
     $db             =   mysql_connect($host, $username, $password) or die('Could not connect');
     mysql_select_db($db_name, $db) or die('could not select db');
 
-    $result         =   mysql_query("SELECT * from video") or die('Could not query');
+    $videoID        =   $_GET['videoID'];
+
+    $result         =   mysql_query("SELECT * from complaint where videoID='" . $videoID. "'") or die('Could not query');
     $json           =   array();
+
+    //echo($result);
 
     if(mysql_num_rows($result)){
         while($row=mysql_fetch_array($result, MYSQL_ASSOC)){

@@ -1,10 +1,10 @@
 var trafficApp = angular.module('TrafficApp');
 
-trafficApp.controller('TrafficListController', ['$scope', '$http', '$log', 'createDialog', function($scope, $http, $log, createDialogService) {
+trafficApp.controller('TrafficListController', ['$scope', '$http', '$log', 'createDialog', 'complaintService', function($scope, $http, $log, createDialogService, complaintService) {
 
     // sample video data
     $scope.videos = [{
-        videoId: 125461,
+        videoID: 125461,
         videoURL: 'http://www.youtube.com/dfiJKLs23j',
         thumbURL: 'http://gfoi.com/traffic/saiy2k/yy-mm-dd-hh-mm.jpg',
         uploadedBy: 'saiy2k',
@@ -19,13 +19,52 @@ trafficApp.controller('TrafficListController', ['$scope', '$http', '$log', 'crea
         }]
     }];
 
+    $scope.complaintType = ["Red Signal Jump",
+                            "Line Crossing",
+                            "No Helmet"];
+
     $scope.newVid = {};
 
     $http({ method: 'GET', url: 'api/video.php' }).
     success(function (data, status, headers, config) {
         //$log.log("success");
-        //$log.log(data);
         $scope.videos = data;
+
+        for (var i = 0; i < data.length; i++) {
+            var vid = data[i];
+            complaintService.getComplaints(vid, function(cdata) {
+                var complaintArray = [];
+                for (var j = 0; j < cdata.length; j++) {
+                    var violationFound = false;
+                    var compl = cdata[j];
+                    //console.log(compl);
+                    for (var k = 0; k < complaintArray.length; k++) {
+                        if (complaintArray[k].violationType === compl.violationType) {
+                            violationFound = true;
+                            complaintArray[k]['violations'].push({'vehicleRegNo': compl.vehicleRegNo, 
+                                                                    'vehicleType': compl.vehicleType,
+                                                                    'timeSlice': compl.timeSlice});
+                            break;
+                        }
+                    }
+                    if (violationFound == false) {
+                        var newType = {};
+                        newType['violationType'] = compl.violationType;
+                        newType['violations'] = [];
+                        newType['violations'].push({'vehicleRegNo': compl.vehicleRegNo, 
+                                                    'vehicleType': compl.vehicleType,
+                                                    'timeSlice': compl.timeSlice});
+                        complaintArray.push(newType);
+                    }
+                }
+
+                //$scope.$apply(function() {
+                    vid.complaints = complaintArray;
+                //});
+
+                console.log($scope.videos);
+            });
+        }
     }).
     error(function (data, status, headers, config) {
         $log.log("error");
@@ -77,6 +116,7 @@ trafficApp.controller('TrafficListController', ['$scope', '$http', '$log', 'crea
             headers: {'Content-Type': 'application/json'}
         }).success(function (data, status, headers, config) {
             $log.log("success");
+            vid['videoID'] = data.videoID;
             $log.log(data);
         }).error(function (data, status, headers, config) {
             $log.log("error");

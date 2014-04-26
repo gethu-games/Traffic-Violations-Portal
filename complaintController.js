@@ -9,38 +9,6 @@ trafficApp.controller('ComplaintListController', ['$scope', '$http', '$log', 'vi
 
     $scope.video = video;
 
-    /*
-    $http({ method: 'GET', url: 'api/video.php' }).
-    success(function (data, status, headers, config) {
-        //$log.log("success");
-        //$log.log(data);
-        $scope.videos = data;
-    }).
-    error(function (data, status, headers, config) {
-        $log.log("error");
-        $log.log(data);
-        $scope.videos = [];
-    });
-    */
-
-    $scope.getComplaints = function() {
-        var json = {};
-        $http({ 
-            url: 'api/complaint.php',
-            method: 'GET',
-            data: json,
-            headers: {'Content-Type': 'application/json'}
-        }).success(function (data, status, headers, config) {
-            //$log.log("success");
-            //$log.log(data);
-            $scope.videos = data;
-        }).error(function (data, status, headers, config) {
-            $log.log("error");
-            $log.log(data);
-            $scope.videos = [];
-        });
-    };
-
     $scope.addNewComplaint = function() {
         var item = {};
         $log.log($scope);
@@ -53,7 +21,8 @@ trafficApp.controller('ComplaintListController', ['$scope', '$http', '$log', 'vi
 
         $scope.complaints.push(item);
 
-        var json = JSON.stringify(vid);
+        var json = JSON.stringify(item);
+        console.log(json);
 
         $http({
             url: 'api/complaint.php',

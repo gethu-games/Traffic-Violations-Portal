@@ -1,0 +1,9 @@
+Complaint Insert JSON POST data
+{
+    "videoID": 103,
+    "vehicleRegNo": "TN0101",
+    "vehicleType": 43,
+    "violationType": 2,
+    "timeSlice": 231,
+    "analyzedBy": "abc@xyz.com"
+}
