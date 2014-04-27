@@ -23,9 +23,11 @@ var trafficApp = angular.module('TrafficApp');
 trafficApp.service('VideoService', ['$http',
                                     '$log',
                                     'ComplaintService',
+                                    '$rootScope',
                                     function($http,
                                              $log,
-                                             complaintService) {
+                                             complaintService,
+                                             $rootScope) {
 
 
     return {
@@ -51,41 +53,19 @@ trafficApp.service('VideoService', ['$http',
 
                 // for each video, get the complaints
                 for (var i = 0; i < data.length; i++) {
-                    var vid     =   data[i];
-                    complaintService.getComplaints(vid, function(cdata) {
-                        var complaintArray          =   [];
+                    var vid                         =   data[i];
+                    vid.complaints                  =   [];
+                    vid.rawComplaints               =   [];
 
-                        // complaints will be received in a flat array; that need
-                        // to be converted into a 2-D array, categorized by
-                        // complaint Type
-                        for (var j = 0; j < cdata.length; j++) {
-                            var violationFound      =   false;
-                            var compl               =   cdata[j];
-
-                            // see if the complaint type is already registered
-                            for (var k = 0; k < complaintArray.length; k++) {
-                                if (complaintArray[k].violationType === compl.violationType) {
-                                    violationFound  =   true;
-                                    complaintArray[k]['violations'].push({'vehicleRegNo': compl.vehicleRegNo, 
-                                                                          'vehicleType': compl.vehicleType,
-                                                                          'timeSlice': compl.timeSlice});
-                                    break;
-                                }
-                            }
-                            if (violationFound == false) {
-                                var newType         =   {};
-                                newType['violationType']        =   compl.violationType;
-                                newType['violations']           =   [];
-                                newType['violations'].push({'vehicleRegNo': compl.vehicleRegNo, 
-                                                            'vehicleType': compl.vehicleType,
-                                                            'timeSlice': compl.timeSlice});
-                                complaintArray.push(newType);
-                            }
-                        }
-
-                        vid.complaints              =   complaintArray;
-                        vid.rawComplaints           =   cdata;
+                    complaintService.getComplaints(vid, function(rawComplaints, complaintArray) {
+        console.log(rawComplaints);
+        console.log(complaintArray);
+        console.log(vid);
+        vid.rawComplaints           =   rawComplaints;
+        vid.complaints              =   complaintArray;
+        console.log(vid);
                     });
+
                 }
             }).
             error(function (data, status, headers, config) {
@@ -95,10 +75,17 @@ trafficApp.service('VideoService', ['$http',
         },
         // end of getVideos
 
-        addNewVideo: function(vid, callback) {
+        /**
+         * calls Video service and send new video data to server
+         * If video is successfully added, notifies the
+         * controller by broadcasting the message `videoAdded`
+         * @params {video}  vid     New Video Object
+         */
+        addNewVideo: function(vid) {
 
-            $log.log(vid);
+            //$log.log(vid);
             var json            =   JSON.stringify(vid);
+            this.newVid         =   vid;
 
             $http({
                 url:                'api/video.php',
@@ -106,13 +93,15 @@ trafficApp.service('VideoService', ['$http',
                 data:               json,
                 headers:            {'Content-Type': 'application/json'}
             }).success(function (data, status, headers, config) {
-                $log.log("success");
-                $log.log(data);
-                callback(data.videoID);
+                vid['videoID']  =   data.videoID;
+                $rootScope.$broadcast('videoAdded');
             }).error(function (data, status, headers, config) {
             });
 
-        }
+        },
+
+        /** object that holds the new Video Object */
+        newVid : {}
 
     };
 

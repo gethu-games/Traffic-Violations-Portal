@@ -34,6 +34,8 @@ trafficApp.controller('ComplaintController', ['$scope',
      */
     $scope.video                =   video;
 
+    console.log(video);
+
     /**
      * array that will hold the list of complaints for the given video
      */
@@ -56,6 +58,8 @@ trafficApp.controller('ComplaintController', ['$scope',
         item["violationType"]   =   $scope.newComplaint.violationType;
         item["timeSlice"]       =   $scope.newComplaint.timeSlice;
         item["analyzedBy"]      =   userService.user.email;
+
+        console.log($scope);
         $scope.complaints.push(item);
 
         complaintService.addNewComplaint(item);

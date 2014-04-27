@@ -98,12 +98,17 @@ trafficApp.controller('VideoController', ['$scope',
         vid["city"]             =   $scope.newVid.city;
         vid["pincode"]          =   $scope.newVid.pincode;
         vid["time"]             =   $scope.newVid.time;
+        vid["complaints"]       =   [];
+        vid["rawComplaints"]    =   [];
+        vid["policePresent"]    =   false;
+        vid["policeName"]       =   "";
 
-        videoService.addNewVideo(vid, function(id) {
-            vid['videoID']      =   id;
-            $scope.videos.push(vid);
-        });
+        videoService.addNewVideo(vid);
     };
+
+    $scope.$on('videoAdded', function() {
+        $scope.videos.push(videoService.newVid);
+    });
 
 }]);
 

@@ -62,7 +62,39 @@ trafficApp.service('ComplaintService', ['$http', function($http) {
                 method:             'GET',
                 headers:            {'Content-Type': 'application/json'}
             }).success(function (data, status, headers, config) {
-                callback(data);
+                var rawComplaints           =   data;
+                var complaintArray          =   [];
+
+                // complaints will be received in a flat array; that need
+                // to be converted into a 2-D array, categorized by
+                // complaint Type
+                for (var j = 0; j < rawComplaints.length; j++) {
+                    var violationFound      =   false;
+                    var compl               =   rawComplaints[j];
+
+                    // see if the complaint type is already registered
+                    for (var k = 0; k < complaintArray.length; k++) {
+                        if (complaintArray[k].violationType === compl.violationType) {
+                            violationFound  =   true;
+                            complaintArray[k]['violations'].push({'vehicleRegNo': compl.vehicleRegNo, 
+                                                                  'vehicleType': compl.vehicleType,
+                                                                  'timeSlice': compl.timeSlice});
+                            break;
+                        }
+                    }
+                    if (violationFound == false) {
+                        var newType         =   {};
+                        newType['violationType']        =   compl.violationType;
+                        newType['violations']           =   [];
+                        newType['violations'].push({'vehicleRegNo': compl.vehicleRegNo, 
+                                                    'vehicleType': compl.vehicleType,
+                                                    'timeSlice': compl.timeSlice});
+                        complaintArray.push(newType);
+                    }
+                }
+
+                callback(rawComplaints, complaintArray);
+
             }).error(function (data, status, headers, config) {
                 callback(data);
             });
