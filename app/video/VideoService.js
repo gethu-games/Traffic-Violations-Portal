@@ -58,12 +58,12 @@ trafficApp.service('VideoService', ['$http',
                     vid.rawComplaints               =   [];
 
                     complaintService.getComplaints(vid, function(rawComplaints, complaintArray) {
-        console.log(rawComplaints);
-        console.log(complaintArray);
-        console.log(vid);
-        vid.rawComplaints           =   rawComplaints;
-        vid.complaints              =   complaintArray;
-        console.log(vid);
+                        console.log(rawComplaints);
+                        console.log(complaintArray);
+                        console.log(vid);
+                        vid.rawComplaints           =   rawComplaints;
+                        vid.complaints              =   complaintArray;
+                        console.log(vid);
                     });
 
                 }
