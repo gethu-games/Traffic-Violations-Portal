@@ -31,12 +31,8 @@ trafficApp.service('VideoService', ['$http',
 
 
     return {
-        /**
-         * returns the list of all complaints registered in the system
-         */
-        complaintType : ["Red Signal Jump",
-                         "Line Crossing",
-                         "No Helmet"],
+
+        complaint: complaintService,
 
         /**
          * returns list of all videos received from the server
@@ -45,27 +41,20 @@ trafficApp.service('VideoService', ['$http',
          */
         getVideos : function(callback) {
 
+            var self            =   this;
+
             // get all videos
             $http({ method: 'GET', url: 'api/video.php' }).
             success(function (data, status, headers, config) {
+
+                $log.log(data);
 
                 callback(data);
 
                 // for each video, get the complaints
                 for (var i = 0; i < data.length; i++) {
-                    var vid                         =   data[i];
-                    vid.complaints                  =   [];
-                    vid.rawComplaints               =   [];
-
-                    complaintService.getComplaints(vid, function(rawComplaints, complaintArray) {
-        console.log(rawComplaints);
-        console.log(complaintArray);
-        console.log(vid);
-        vid.rawComplaints           =   rawComplaints;
-        vid.complaints              =   complaintArray;
-        console.log(vid);
-                    });
-
+                    var vid     =   data[i];
+                    self.getComplaints(vid);
                 }
             }).
             error(function (data, status, headers, config) {
@@ -74,6 +63,19 @@ trafficApp.service('VideoService', ['$http',
 
         },
         // end of getVideos
+
+        /**
+         * get the complaints for the specified video from server
+         */
+        getComplaints: function(vid) {
+            vid.complaints                  =   [];
+            vid.rawComplaints               =   [];
+
+            complaintService.getComplaints(vid, function(rawComplaints, complaintArray) {
+                vid.rawComplaints           =   rawComplaints;
+                vid.complaints              =   complaintArray;
+            });
+        },
 
         /**
          * calls Video service and send new video data to server

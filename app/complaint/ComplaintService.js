@@ -27,6 +27,23 @@ var trafficApp = angular.module('TrafficApp');
 trafficApp.service('ComplaintService', ['$http', function($http) {
 
     return {
+        /**
+         * Vehicle Type
+         */
+        vehicleType : ["2 Wheeler",
+                       "Auto",
+                       "MTC Bus",
+                       "Bus",
+                       "Truck",
+                       "Lorry"],
+        /**
+         * returns the list of all complaints registered in the system
+         */
+        type : ["Red Signal Jump",
+                "Line Crossing",
+                "No Helmet",
+                "Signal Not Working",
+                "Damanged Road"],
 
         /**
          * registers a new complaint with server for the specified video
@@ -57,6 +74,8 @@ trafficApp.service('ComplaintService', ['$http', function($http) {
          */
         getComplaints: function(vid, callback) {
 
+            var self            =   this;
+
             $http({ 
                 url:                'api/complaint.php?videoID=' + vid.videoID,
                 method:             'GET',
@@ -69,28 +88,10 @@ trafficApp.service('ComplaintService', ['$http', function($http) {
                 // to be converted into a 2-D array, categorized by
                 // complaint Type
                 for (var j = 0; j < rawComplaints.length; j++) {
-                    var violationFound      =   false;
                     var compl               =   rawComplaints[j];
 
-                    // see if the complaint type is already registered
-                    for (var k = 0; k < complaintArray.length; k++) {
-                        if (complaintArray[k].violationType === compl.violationType) {
-                            violationFound  =   true;
-                            complaintArray[k]['violations'].push({'vehicleRegNo': compl.vehicleRegNo, 
-                                                                  'vehicleType': compl.vehicleType,
-                                                                  'timeSlice': compl.timeSlice});
-                            break;
-                        }
-                    }
-                    if (violationFound == false) {
-                        var newType         =   {};
-                        newType['violationType']        =   compl.violationType;
-                        newType['violations']           =   [];
-                        newType['violations'].push({'vehicleRegNo': compl.vehicleRegNo, 
-                                                    'vehicleType': compl.vehicleType,
-                                                    'timeSlice': compl.timeSlice});
-                        complaintArray.push(newType);
-                    }
+                    self.processComplaintToArray(compl, complaintArray);
+
                 }
 
                 callback(rawComplaints, complaintArray);
@@ -99,6 +100,30 @@ trafficApp.service('ComplaintService', ['$http', function($http) {
                 callback(data);
             });
 
+        },
+
+        processComplaintToArray: function(compl, complaintArray) {
+            var violationFound  =   false;
+
+            // see if the complaint type is already registered
+            for (var k = 0; k < complaintArray.length; k++) {
+                if (complaintArray[k].violationType === compl.violationType) {
+                    violationFound          =   true;
+                    complaintArray[k]['violations'].push({'vehicleRegNo': compl.vehicleRegNo, 
+                                                          'vehicleType': compl.vehicleType,
+                                                          'timeSlice': compl.timeSlice});
+                    break;
+                }
+            }
+            if (violationFound == false) {
+                var newType                 =   {};
+                newType['violationType']    =   compl.violationType;
+                newType['violations']       =   [];
+                newType['violations'].push({'vehicleRegNo': compl.vehicleRegNo, 
+                                            'vehicleType': compl.vehicleType,
+                                            'timeSlice': compl.timeSlice});
+                complaintArray.push(newType);
+            }
         }
     };
 

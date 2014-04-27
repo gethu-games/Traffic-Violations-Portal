@@ -30,16 +30,19 @@ trafficApp.controller('ComplaintController', ['$scope',
                                                        video) {
 
     /**
+     * reference to Complaint Service
+     */
+    $scope.complaint            =   complaintService;
+
+    /**
      * current video for which analyze phase is being done
      */
     $scope.video                =   video;
 
-    console.log(video);
-
     /**
      * array that will hold the list of complaints for the given video
      */
-    $scope.complaints           =   video.rawComplaints;
+    $scope.rawComplaints        =   video.rawComplaints;
 
     /**
      * single complaint details that is last entered to be send to web service
@@ -59,9 +62,7 @@ trafficApp.controller('ComplaintController', ['$scope',
         item["timeSlice"]       =   $scope.newComplaint.timeSlice;
         item["analyzedBy"]      =   userService.user.email;
 
-        console.log($scope);
-        $scope.complaints.push(item);
-
+        complaintService.processComplaintToArray(item, $scope.video.complaints);
         complaintService.addNewComplaint(item);
     };
 

@@ -24,7 +24,7 @@ var TrafficApp = angular.module('TrafficApp');
  * Stores User Profile, Login State, etc.,
  * Login User via oauth.js, configured with Google Login for now
  */
-TrafficApp.service('UserService', function($http, $log) {
+TrafficApp.service('UserService', ['$http', '$log', '$rootScope', function($http, $log, $rootScope) {
 
     return {
 
@@ -43,6 +43,7 @@ TrafficApp.service('UserService', function($http, $log) {
 
             OAuth.popup('google', function(err, result) {
                 $log.log(result);
+                $log.log(err);
                 result.get('/oauth2/v1/userinfo').done(function(data) {
                     $log.log(data);
                     self.user   =   data; 
@@ -71,6 +72,7 @@ TrafficApp.service('UserService', function($http, $log) {
                 headers: {'Content-Type': 'application/json'}
             }).success(function (data, status, headers, config) {
                 callback(data);
+                $rootScope.$broadcast('user:updated');
             }).error(function (data, status, headers, config) {
                 callback(data);
             });
@@ -79,5 +81,5 @@ TrafficApp.service('UserService', function($http, $log) {
 
     };
 
-});
+}]);
 

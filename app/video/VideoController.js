@@ -55,13 +55,17 @@ trafficApp.controller('VideoController', ['$scope',
     /** array of videos */
     $scope.videos               =   [];
 
-    /** Complaint types as enumerator */
-    $scope.complaintType        =   videoService.complaintType;
+    /** ref to Complaint Service */
+    $scope.complaint            =   videoService.complaint;
 
     /** Object to hold data for new videos */
     $scope.newVid               =   {};
 
+    /** is the User logged in or not */
+    $scope.isLoggedIn           =   userService.user.name != '';
+
     videoService.getVideos(function(vids) {
+        $log.log(vids);
         $scope.videos           =   vids;
     });
 
@@ -108,6 +112,10 @@ trafficApp.controller('VideoController', ['$scope',
 
     $scope.$on('videoAdded', function() {
         $scope.videos.push(videoService.newVid);
+    });
+
+    $scope.$on('user:updated', function() {
+        $scope.isLoggedIn       =   userService.user.name != '';
     });
 
 }]);
