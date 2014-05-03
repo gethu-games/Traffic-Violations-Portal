@@ -31,6 +31,7 @@ along with ACR-Timeline-Infograph. If not, see <http://www.gnu.org/licenses/>.
     <script src="app/user/UserController.js"></script>
     <script src="app/complaint/ComplaintService.js"></script>
     <script src="app/complaint/ComplaintController.js"></script>
+    <script src="app/video/YoutubeService.js"></script>
     <script src="app/video/VideoService.js"></script>
     <script src="app/video/VideoController.js"></script>
     <script src="app/leaderboard/LeaderboardService.js"></script>
@@ -141,7 +142,7 @@ along with ACR-Timeline-Infograph. If not, see <http://www.gnu.org/licenses/>.
                     <div class="barButton" ng-click="analyze(vid)" style="line-height: 10px; float: right; display:inline"> Analyze </div> 
                 </h3>
                 <div class="videoContent">
-                    <div style="float: left; display:inline"> <img src="{{vid.thumbURL}}" class="videoThumb"> </div>
+                    <a href="{{vid.videoURL}}" target="_blank" style="float: left; display:inline"> <img src="{{vid.thumbURL}}" class="videoThumb"> </a>
                     <div style="float: left; overflow-x: auto; width: 640px; height: 100px; white-space: nowrap; display:inline">
                         <div ng-repeat="compl in vid.complaints">
                             <div class="violationCard"> <b class="violationCount">{{compl.violations.length}}</b> {{complaint.type[compl.violationType]}} </div>

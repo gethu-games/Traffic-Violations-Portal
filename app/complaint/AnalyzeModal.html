@@ -1,5 +1,11 @@
 <div class="row-fluid">
-    <div> Video Taken at {{video.locality}} </div>
+    <div> Video Taken at {{video.locality}}. Analyze Instructions: </div>
+    <ol>
+        <li>Download <a href="http://www.ytddownloader.com/" target="_blank"> Youtube Downloader </a></li>
+        <li>Paste the Video URL in it: <u>{{video.videoURL}}</u> and download highest quality (1080p) </li>
+        <li>Open it and play in any Video players (VLC) </li>
+        <li>Carefully identify the violators, and type down their registration number, vehicle type, violation type and the time period where the violation happens (in seconds)</li>
+    </ol>
     <table width="100%">
         <tr ng-repeat="item in rawComplaints">
             <td>{{item.vehicleRegNo}}</td>

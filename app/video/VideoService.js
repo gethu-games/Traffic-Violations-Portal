@@ -23,16 +23,21 @@ var trafficApp = angular.module('TrafficApp');
 trafficApp.service('VideoService', ['$http',
                                     '$log',
                                     'ComplaintService',
+                                    'YoutubeService',
                                     '$rootScope',
                                     function($http,
                                              $log,
                                              complaintService,
+                                             youtubeService,
                                              $rootScope) {
 
 
     return {
 
         complaint: complaintService,
+
+        /** object that holds the new Video Object */
+        newVid : {},
 
         /**
          * returns list of all videos received from the server
@@ -54,6 +59,7 @@ trafficApp.service('VideoService', ['$http',
                 // for each video, get the complaints
                 for (var i = 0; i < data.length; i++) {
                     var vid     =   data[i];
+                    vid.thumbURL=   youtubeService.getThumbURL(vid.videoURL);
                     self.getComplaints(vid);
                 }
             }).
@@ -74,6 +80,7 @@ trafficApp.service('VideoService', ['$http',
             complaintService.getComplaints(vid, function(rawComplaints, complaintArray) {
                 vid.rawComplaints           =   rawComplaints;
                 vid.complaints              =   complaintArray;
+
             });
         },
 
@@ -100,10 +107,9 @@ trafficApp.service('VideoService', ['$http',
             }).error(function (data, status, headers, config) {
             });
 
-        },
+        }
 
-        /** object that holds the new Video Object */
-        newVid : {}
+
 
     };
 
