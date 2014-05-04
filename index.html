@@ -139,17 +139,17 @@ along with ACR-Timeline-Infograph. If not, see <http://www.gnu.org/licenses/>.
             <div ng-repeat="vid in videos" class="videoRow">
                 <h3 class="videoHeader">
                     <p style="display: inline">{{vid.videoID}}. Video uploaded by <b>{{vid.uploadedBy}}</b> and analyzed by <b>{{vid.analyzedBy}}</b> </p>
-                    <div class="barButton" ng-click="analyze(vid)" style="line-height: 10px; float: right; display:inline"> Analyze </div> 
+                    <div class="barButton" ng-click="analyze(vid)" ng-show="isLoggedIn" style="line-height: 10px; float: right; display:inline"> Analyze </div> 
                 </h3>
                 <div class="videoContent">
                     <a href="{{vid.videoURL}}" target="_blank" style="float: left; display:inline"> <img src="{{vid.thumbURL}}" class="videoThumb"> </a>
                     <div style="float: left; overflow-x: auto; width: 640px; height: 100px; white-space: nowrap; display:inline">
                         <div ng-repeat="compl in vid.complaints">
-                            <div class="violationCard"> <b class="violationCount">{{compl.violations.length}}</b> {{complaint.type[compl.violationType]}} </div>
+                            <div class="violationCard"> <b class="violationCount">{{compl.violations.length}}</b> {{compl.violationType}} </div>
                         </div>
                     </div> 
                 </div>
-                <p style="display: block"> {{vid.time}} at {{vid.locality + ', ' + vid.town}} </p>
+                <p style="display: block"> {{vid.time}} at {{vid.locality + ', ' + vid.town + ', ' + vid.city}} </p>
             </div>
 
         </div>

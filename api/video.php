@@ -22,7 +22,7 @@ along with ACR-Timeline-Infograph. If not, see <http://www.gnu.org/licenses/>.
 require_once('db.php');
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    insertVideo($host, $username, $password, $db_name);
+    //insertVideo($host, $username, $password, $db_name);
 } else if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     returnVideos($host, $username, $password, $db_name);
 }

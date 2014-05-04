@@ -64,6 +64,7 @@ trafficApp.controller('ComplaintController', ['$scope',
 
         complaintService.processComplaintToArray(item, $scope.video.complaints);
         complaintService.addNewComplaint(item);
+        $scope.video.rawComplaints.push(item);
     };
 
 }]);
