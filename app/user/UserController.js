@@ -28,8 +28,9 @@ TrafficApp.controller('UserController', ['$scope', 'UserService', function($scop
     $scope.user                 =   userService.user;
 
     $scope.login = function() {
-        userService.login(function() {
+        userService.login(function(data) {
             $scope.user         =   userService.user;
+            console.log(data);
         });
     };
 

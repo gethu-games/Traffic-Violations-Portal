@@ -44,13 +44,15 @@ trafficApp.controller('VideoController', ['$scope',
                                           'ComplaintService',
                                           'UserService',
                                           'VideoService',
+                                          'YoutubeService',
                                           function($scope,
                                                    $http,
                                                    $log,
                                                    createDialogService,
                                                    complaintService,
                                                    userService,
-                                                   videoService) {
+                                                   videoService,
+                                                   youtubeService) {
 
     /** array of videos */
     $scope.videos               =   [];
@@ -63,6 +65,8 @@ trafficApp.controller('VideoController', ['$scope',
 
     /** is the User logged in or not */
     $scope.isLoggedIn           =   userService.user.name != '';
+
+    $scope.complaintService     =   complaintService;
 
     videoService.getVideos(function(vids) {
         $log.log(vids);
@@ -108,6 +112,13 @@ trafficApp.controller('VideoController', ['$scope',
         vid["policeName"]       =   "";
 
         videoService.addNewVideo(vid);
+
+        var videoID             =   youtubeService.getVideoID(vid['videoURL']);
+        youtubeService.getVideoDuration(videoID, function(duration) {
+            userService.awardPoint(userService.user.email, duration, function(data) {
+               console.log(data);
+            }); 
+        });
     };
 
     $scope.$on('videoAdded', function() {

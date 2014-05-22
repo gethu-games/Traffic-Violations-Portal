@@ -68,7 +68,23 @@ TrafficApp.service('UserService', ['$http', '$log', '$rootScope', function($http
             $http({
                 url: 'api/user.php',
                 method: "POST",
-                data: {'name': name, 'email': email},
+                data: {'method': 'login', 'name': name, 'email': email},
+                headers: {'Content-Type': 'application/json'}
+            }).success(function (data, status, headers, config) {
+                callback(data);
+                $rootScope.$broadcast('user:updated');
+            }).error(function (data, status, headers, config) {
+                callback(data);
+            });
+
+        },
+
+        awardPoint: function(email, point, callback) {
+
+            $http({
+                url: 'api/user.php',
+                method: "POST",
+                data: {'method': 'awardPoint', 'points': point, 'email': email},
                 headers: {'Content-Type': 'application/json'}
             }).success(function (data, status, headers, config) {
                 callback(data);

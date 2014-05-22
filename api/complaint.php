@@ -22,13 +22,13 @@ along with ACR-Timeline-Infograph. If not, see <http://www.gnu.org/licenses/>.
 require_once('db.php');
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    //insertComplaint($host, $username, $password, $db_name);
+    insertComplaint($host, $username, $password, $db_name, $analyzerList);
 } else if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     returnComplaints($host, $username, $password, $db_name);
 }
 
 
-function insertComplaint($host, $username, $password, $db_name) {
+function insertComplaint($host, $username, $password, $db_name, $whiteList) {
 
     //echo("insert Video");
 
@@ -37,6 +37,14 @@ function insertComplaint($host, $username, $password, $db_name) {
 
     $json           =   file_get_contents('php://input');
     $obj            =   json_decode($json);
+
+    if (!in_array($obj->analyzedBy, $whiteList)) {
+        $json       =   array();
+        $json['error'] = 'not authorized';
+        echo json_encode($json);
+        mysql_close($db);
+        return;
+    }
 
     $sql            =   "INSERT INTO complaint (videoID, vehicleRegNo, vehicleType, violationType, timeSlice, analyzedBy) VALUES ( '" . $obj->videoID . "','" . $obj->vehicleRegNo . "','" . $obj->vehicleType . "','" . $obj->violationType . "','" . $obj->timeSlice . "','" . $obj->analyzedBy . "')";
 

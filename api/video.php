@@ -22,13 +22,13 @@ along with ACR-Timeline-Infograph. If not, see <http://www.gnu.org/licenses/>.
 require_once('db.php');
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    //insertVideo($host, $username, $password, $db_name);
+    insertVideo($host, $username, $password, $db_name, $uploaderList);
 } else if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     returnVideos($host, $username, $password, $db_name);
 }
 
 
-function insertVideo($host, $username, $password, $db_name) {
+function insertVideo($host, $username, $password, $db_name, $whiteList) {
 
     //echo("insert Video");
 
@@ -38,6 +38,15 @@ function insertVideo($host, $username, $password, $db_name) {
     $json           =   file_get_contents('php://input');
     $obj            =   json_decode($json);
     //print_r($obj);
+
+    var_dump($whiteList);
+    if (!in_array($obj->uploadedBy, $whiteList)) {
+        $json       =   array();
+        $json['error'] = 'not authorized';
+        echo json_encode($json);
+        mysql_close($db);
+        return;
+    }
 
     $sql            =   "INSERT INTO video (videoURL, thumbURL, uploadedBy, analyzedBy, locality, town, city, pincode, time) VALUES ( '" . $obj->videoURL . "','" . $obj->thumbURL . "','" . $obj->uploadedBy . "','" . $obj->analyzedBy . "','" . $obj->locality . "','" . $obj->town . "','" . $obj->city . "'," . $obj->pincode . ",'" . $obj->time . "')";
     //echo ($sql);

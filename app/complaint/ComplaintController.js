@@ -54,17 +54,33 @@ trafficApp.controller('ComplaintController', ['$scope',
      * will be called from the Analyze popup dialog
      */
     $scope.addNewComplaint      =   function() {
+        var violationIndex      =   complaintService.type.indexOf($scope.newComplaint.violationType);
         var item                =   {};
         item["videoID"]         =   $scope.video.videoID;
         item["vehicleRegNo"]    =   $scope.newComplaint.vehicleRegNo;
         item["vehicleType"]     =   $scope.newComplaint.vehicleType;
-        item["violationType"]   =   $scope.newComplaint.violationType;
+        item["violationType"]   =   violationIndex;
         item["timeSlice"]       =   $scope.newComplaint.timeSlice;
         item["analyzedBy"]      =   userService.user.email;
 
         complaintService.processComplaintToArray(item, $scope.video.complaints);
         complaintService.addNewComplaint(item);
         $scope.video.rawComplaints.push(item);
+
+        var point               =   complaintService.points[violationIndex];
+
+        console.log('violation index ' + violationIndex);
+        console.log('point ' + point);
+        
+        // award point to Analyzer
+        userService.awardPoint(userService.user.email, point, function(data) {
+           console.log(data);
+        }); 
+
+        // award a fraction of points to Uploader
+        userService.awardPoint($scope.video.uploadedBy, point * 0.1, function(data) {
+           console.log(data);
+        }); 
     };
 
 }]);

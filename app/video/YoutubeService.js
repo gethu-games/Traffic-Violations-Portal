@@ -20,7 +20,7 @@ along with ACR-Timeline-Infograph. If not, see <http://www.gnu.org/licenses/>.
 
 var trafficApp = angular.module('TrafficApp');
 
-trafficApp.service('YoutubeService', ['$log', function($log) {
+trafficApp.service('YoutubeService', ['$log', '$http', function($log, $http) {
 
 
     return {
@@ -53,6 +53,19 @@ trafficApp.service('YoutubeService', ['$log', function($log) {
             id                  =   url.match(regex)[1];
             return                  id;
             */
+        },
+
+        getVideoDuration: function(videoID, callback) {
+            var videoMetaURL    =   'http://gdata.youtube.com/feeds/api/videos/' + videoID + '?v=2&alt=jsonc';
+            $http({
+                url:                videoMetaURL,
+                method:             'GET',
+                headers:            {'Content-Type': 'application/json'}
+            }).success(function (data, status, headers, config) {
+                callback(data.data.duration);
+            }).error(function (data, status, headers, config) {
+                callback(data);
+            });
         }
 
     };
