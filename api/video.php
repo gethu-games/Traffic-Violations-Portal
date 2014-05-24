@@ -70,7 +70,7 @@ function returnVideos($host, $username, $password, $db_name) {
     $db             =   mysql_connect($host, $username, $password) or die('Could not connect');
     mysql_select_db($db_name, $db) or die('could not select db');
 
-    $result         =   mysql_query("SELECT * from video") or die('Could not query');
+    $result         =   mysql_query("SELECT * from video ORDER BY time DESC") or die('Could not query');
     $json           =   array();
 
     if(mysql_num_rows($result)){

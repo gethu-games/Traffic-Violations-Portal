@@ -1,158 +1,179 @@
 var trafficApp = angular.module('TrafficApp');
 
-trafficApp.service('leaderboardData', function() {
+trafficApp.service('leaderboardData', ['$http', '$log', function($http, $log) {
 
     var topIndividuals = {};
 
     topIndividuals['weekly'] =  [
-        {"name": "Bhagath Singh", "point": 120},
-        {"name": "Mahatma Gandhi", "point": 96},
-        {"name": "Subash", "point": 92},
-        {"name": "Bharathiyaar", "point": 86},
-        {"name": "V. O. C", "point": 80},
-        {"name": "Lajpat Rai", "point": 70},
-        {"name": "Periyaar", "point": 65},
-        {"name": "Nehru", "point": 60},
-        {"name": "Sukhdev", "point": 55},
-        {"name": "Tilak", "point": 50}
+        {"userName": "Bhagath Singh", "points": 120},
+        {"userName": "Mahatma Gandhi", "points": 96},
+        {"userName": "Subash", "points": 92},
+        {"userName": "Bharathiyaar", "points": 86},
+        {"userName": "V. O. C", "points": 80},
+        {"userName": "Lajpat Rai", "points": 70},
+        {"userName": "Periyaar", "points": 65},
+        {"userName": "Nehru", "points": 60},
+        {"userName": "Sukhdev", "points": 55},
+        {"userName": "Tilak", "points": 50}
     ];
 
     topIndividuals['monthly'] = [
-        {"name": "Mahatma Gandhi", "point": 600},
-        {"name": "Subash", "point": 520},
-        {"name": "Bhagath Singh", "point": 500},
-        {"name": "Bharathiyaar", "point": 486},
-        {"name": "V. O. C", "point": 400},
-        {"name": "Lajpat Rai", "point": 350},
-        {"name": "Periyaar", "point": 320},
-        {"name": "Nehru", "point": 310},
-        {"name": "Sukhdev", "point": 290},
-        {"name": "Tilak", "point": 250}
+        {"userName": "Mahatma Gandhi", "points": 600},
+        {"userName": "Subash", "points": 520},
+        {"userName": "Bhagath Singh", "points": 500},
+        {"userName": "Bharathiyaar", "points": 486},
+        {"userName": "V. O. C", "points": 400},
+        {"userName": "Lajpat Rai", "points": 350},
+        {"userName": "Periyaar", "points": 320},
+        {"userName": "Nehru", "points": 310},
+        {"userName": "Sukhdev", "points": 290},
+        {"userName": "Tilak", "points": 250}
     ];
 
     topIndividuals['yearly'] = [ 
-        {"name": "Subash", "point": 9000},
-        {"name": "Mahatma Gandhi", "point": 8800},
-        {"name": "Bhagath Singh", "point": 8600},
-        {"name": "Bharathiyaar", "point": 8100},
-        {"name": "V. O. C", "point": 7900},
-        {"name": "Lajpat Rai", "point": 6700},
-        {"name": "Periyaar", "point": 6200},
-        {"name": "Nehru", "point": 5750},
-        {"name": "Sukhdev", "point": 5500},
-        {"name": "Tilak", "point": 5200}
+        {"userName": "Subash", "points": 9000},
+        {"userName": "Mahatma Gandhi", "points": 8800},
+        {"userName": "Bhagath Singh", "points": 8600},
+        {"userName": "Bharathiyaar", "points": 8100},
+        {"userName": "V. O. C", "points": 7900},
+        {"userName": "Lajpat Rai", "points": 6700},
+        {"userName": "Periyaar", "points": 6200},
+        {"userName": "Nehru", "points": 5750},
+        {"userName": "Sukhdev", "points": 5500},
+        {"userName": "Tilak", "points": 5200}
     ];
 
 
     var topRegion = {};
 
     topRegion['weekly'] =  [
-        {"name": "Chennai", "point": 120},
-        {"name": "Porpandhar", "point": 96},
-        {"name": "Delhi", "point": 92},
-        {"name": "Madurai", "point": 86},
-        {"name": "Trichy", "point": 80},
-        {"name": "Mumbai", "point": 70},
-        {"name": "Salem", "point": 65},
-        {"name": "Amrister", "point": 60},
-        {"name": "Lucknow", "point": 55},
-        {"name": "Pune", "point": 50}
+        {"userName": "Chennai", "points": 120},
+        {"userName": "Porpandhar", "points": 96},
+        {"userName": "Delhi", "points": 92},
+        {"userName": "Madurai", "points": 86},
+        {"userName": "Trichy", "points": 80},
+        {"userName": "Mumbai", "points": 70},
+        {"userName": "Salem", "points": 65},
+        {"userName": "Amrister", "points": 60},
+        {"userName": "Lucknow", "points": 55},
+        {"userName": "Pune", "points": 50}
     ];
 
     topRegion['monthly'] = [
-        {"name": "Porpandhar", "point": 600},
-        {"name": "Delhi", "point": 520},
-        {"name": "Chennai", "point": 500},
-        {"name": "Madurai", "point": 486},
-        {"name": "Trichy", "point": 400},
-        {"name": "Mumbai", "point": 350},
-        {"name": "Salem", "point": 320},
-        {"name": "Amrister", "point": 310},
-        {"name": "Lucknow", "point": 290},
-        {"name": "Pune", "point": 250}
+        {"userName": "Porpandhar", "points": 600},
+        {"userName": "Delhi", "points": 520},
+        {"userName": "Chennai", "points": 500},
+        {"userName": "Madurai", "points": 486},
+        {"userName": "Trichy", "points": 400},
+        {"userName": "Mumbai", "points": 350},
+        {"userName": "Salem", "points": 320},
+        {"userName": "Amrister", "points": 310},
+        {"userName": "Lucknow", "points": 290},
+        {"userName": "Pune", "points": 250}
     ];
 
     topRegion['yearly'] = [ 
-        {"name": "Delhi", "point": 9000},
-        {"name": "Porpandhar", "point": 8800},
-        {"name": "Chennai", "point": 8600},
-        {"name": "Madurai", "point": 8100},
-        {"name": "Trichy", "point": 7900},
-        {"name": "Mumbai", "point": 6700},
-        {"name": "Salem", "point": 6200},
-        {"name": "Amrister", "point": 5750},
-        {"name": "Lucknow", "point": 5500},
-        {"name": "Pune", "point": 5200}
+        {"userName": "Delhi", "points": 9000},
+        {"userName": "Porpandhar", "points": 8800},
+        {"userName": "Chennai", "points": 8600},
+        {"userName": "Madurai", "points": 8100},
+        {"userName": "Trichy", "points": 7900},
+        {"userName": "Mumbai", "points": 6700},
+        {"userName": "Salem", "points": 6200},
+        {"userName": "Amrister", "points": 5750},
+        {"userName": "Lucknow", "points": 5500},
+        {"userName": "Pune", "points": 5200}
     ];
 
 
     var topOrganization = {};
 
     topOrganization['weekly'] =  [
-        {"name": "Thozhan", "point": 120},
-        {"name": "Infosys", "point": 96},
-        {"name": "CSS", "point": 92},
-        {"name": "CCTP", "point": 86},
-        {"name": "GFoI", "point": 80},
-        {"name": "CTS", "point": 70},
-        {"name": "5th Pillar", "point": 65},
-        {"name": "Anna Univ", "point": 60},
-        {"name": "MNMJEC", "point": 55},
-        {"name": "IIT, Madras", "point": 50}
+        {"userName": "Thozhan", "points": 120},
+        {"userName": "Infosys", "points": 96},
+        {"userName": "CSS", "points": 92},
+        {"userName": "CCTP", "points": 86},
+        {"userName": "GFoI", "points": 80},
+        {"userName": "CTS", "points": 70},
+        {"userName": "5th Pillar", "points": 65},
+        {"userName": "Anna Univ", "points": 60},
+        {"userName": "MNMJEC", "points": 55},
+        {"userName": "IIT, Madras", "points": 50}
     ];
 
     topOrganization['monthly'] = [
-        {"name": "Infosys", "point": 600},
-        {"name": "CSS", "point": 520},
-        {"name": "Thozhan", "point": 500},
-        {"name": "CCTP", "point": 486},
-        {"name": "GFoI", "point": 400},
-        {"name": "CTS", "point": 350},
-        {"name": "5th Pillar", "point": 320},
-        {"name": "Anna Univ", "point": 310},
-        {"name": "MNMJEC", "point": 290},
-        {"name": "IIT, Madras", "point": 250}
+        {"userName": "Infosys", "points": 600},
+        {"userName": "CSS", "points": 520},
+        {"userName": "Thozhan", "points": 500},
+        {"userName": "CCTP", "points": 486},
+        {"userName": "GFoI", "points": 400},
+        {"userName": "CTS", "points": 350},
+        {"userName": "5th Pillar", "points": 320},
+        {"userName": "Anna Univ", "points": 310},
+        {"userName": "MNMJEC", "points": 290},
+        {"userName": "IIT, Madras", "points": 250}
     ];
 
     topOrganization['yearly'] = [ 
-        {"name": "CSS", "point": 9000},
-        {"name": "Infosys", "point": 8800},
-        {"name": "Thozhan", "point": 8600},
-        {"name": "CCTP", "point": 8100},
-        {"name": "GFoI", "point": 7900},
-        {"name": "CTS", "point": 6700},
-        {"name": "5th Pillar", "point": 6200},
-        {"name": "Anna Univ", "point": 5750},
-        {"name": "MNMJEC", "point": 5500},
-        {"name": "IIT, Madras", "point": 5200}
+        {"userName": "CSS", "points": 9000},
+        {"userName": "Infosys", "points": 8800},
+        {"userName": "Thozhan", "points": 8600},
+        {"userName": "CCTP", "points": 8100},
+        {"userName": "GFoI", "points": 7900},
+        {"userName": "CTS", "points": 6700},
+        {"userName": "5th Pillar", "points": 6200},
+        {"userName": "Anna Univ", "points": 5750},
+        {"userName": "MNMJEC", "points": 5500},
+        {"userName": "IIT, Madras", "points": 5200}
     ];
 
-
-    var data = [ {
-        "id": 0,
-        "name": "individuals",
-        "values": topIndividuals
-    }, {
-        "id": 1,
-        "name": "regions",
-        "values": topRegion
-    }, {
-        "id": 2,
-        "name": "organization",
-        "values": topOrganization
-    }];
-
     return {
+
+        data: [],
+
         getData: function() {
-            return data;
+
+            var self = this;
+         
+            self.data = [ {
+                "id": 0,
+                "name": "individuals",
+                "values": topIndividuals
+            }, {
+                "id": 1,
+                "name": "regions",
+                "values": topRegion
+            }, {
+                "id": 2,
+                "name": "organization",
+                "values": topOrganization
+            }];
+
+            self.getUserData();
+            return self.data;
         },
+
         getSelectedData: function(id) {
-            for (var i = 0; i < data.length; i++) {
-                if (id == data[i].id) {
-                    return data[i].values;
+            var self = this;
+            for (var i = 0; i < self.data.length; i++) {
+                if (id == self.data[i].id) {
+                    return self.data[i].values;
                 }
             }
+        },
+
+        getUserData: function() {
+            var self = this;
+            // get all videos
+            $http({ method: 'GET', url: 'api/user.php' }).
+            success(function (data, status, headers, config) {
+                self.data[0].values.weekly = data;
+                self.data[0].values.monthly = data;
+                self.data[0].values.yearly = data;
+            }).
+            error(function (data, status, headers, config) {
+            });
         }
     }
 
-});
+}]);

@@ -61,7 +61,7 @@ trafficApp.controller('ComplaintController', ['$scope',
         item["vehicleType"]     =   $scope.newComplaint.vehicleType;
         item["violationType"]   =   violationIndex;
         item["timeSlice"]       =   $scope.newComplaint.timeSlice;
-        item["analyzedBy"]      =   userService.user.email;
+        item["analyzedBy"]      =   userService.user.userName;
 
         complaintService.processComplaintToArray(item, $scope.video.complaints);
         complaintService.addNewComplaint(item);

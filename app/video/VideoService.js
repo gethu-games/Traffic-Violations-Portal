@@ -52,7 +52,7 @@ trafficApp.service('VideoService', ['$http',
             $http({ method: 'GET', url: 'api/video.php' }).
             success(function (data, status, headers, config) {
 
-                $log.log(data);
+                //$log.log(data);
 
                 callback(data);
 
@@ -104,9 +104,9 @@ trafficApp.service('VideoService', ['$http',
             }).success(function (data, status, headers, config) {
                 vid['videoID']  =   data.videoID;
                 $rootScope.$broadcast('videoAdded');
-                console.log(data);
+                //console.log(data);
             }).error(function (data, status, headers, config) {
-                console.log(data);
+                //console.log(data);
             });
 
         }

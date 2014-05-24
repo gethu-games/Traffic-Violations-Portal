@@ -77,28 +77,8 @@ along with ACR-Timeline-Infograph. If not, see <http://www.gnu.org/licenses/>.
                 <h3>This week</h3>
                 <table width="100%">
                     <tr ng-repeat="member in selectedOption.monthly">
-                        <td class="leftField left">{{member.name}}</td>
-                        <td class="rightField right">{{member.point}}</td>
-                    </tr>
-                </table>
-            </div>
-
-            <div class="cardColumn33">
-                <h3>This month</h3>
-                <table width="100%">
-                    <tr ng-repeat="member in selectedOption.monthly">
-                        <td class="leftField left">{{member.name}}</td>
-                        <td class="rightField right">{{member.point}}</td>
-                    </tr>
-                </table>
-            </div>
-
-            <div class="cardColumn33" style="float:right; border: 0px">
-                <h3>This Year</h3>
-                <table width="100%">
-                    <tr ng-repeat="member in selectedOption.yearly">
-                        <td class="leftField left">{{member.name}}</td>
-                        <td class="rightField right">{{member.point}}</td>
+                        <td class="leftField left">{{member.userName}}</td>
+                        <td class="rightField right">{{member.points}}</td>
                     </tr>
                 </table>
             </div>
@@ -117,6 +97,7 @@ along with ACR-Timeline-Infograph. If not, see <http://www.gnu.org/licenses/>.
 
                 <span style="float: right">
                     <select>
+                        <option value="WIP">WORK IN PROGRESS</option>
                         <option value="Saidapet">Saidapet</option>
                         <option value="Guindy">Guindy</option>
                         <option value="Velachery">Region</option>
@@ -125,6 +106,7 @@ along with ACR-Timeline-Infograph. If not, see <http://www.gnu.org/licenses/>.
 
                 <span style="float: right">
                     <select>
+                        <option value="WIP">WORK IN PROGRESS</option>
                         <option value="2014-01">January, 2014</option>
                         <option value="2014-02">February, 2014</option>
                         <option value="2014-03">March, 2014</option>

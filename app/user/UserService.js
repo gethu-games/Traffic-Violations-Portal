@@ -42,12 +42,13 @@ TrafficApp.service('UserService', ['$http', '$log', '$rootScope', function($http
             var self            =   this;
 
             OAuth.popup('google', function(err, result) {
-                $log.log(result);
-                $log.log(err);
                 result.get('/oauth2/v1/userinfo').done(function(data) {
-                    $log.log(data);
                     self.user   =   data; 
-                    self.loginToServer(data.name, data.email, callback);
+                    self.loginToServer(data.name, data.email, function(ddata) {
+                        self.user['userName'] = ddata['userName'];
+                        self.user['points'] = ddata['points'];
+                        callback();
+                    });
                 });
             });
 

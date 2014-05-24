@@ -69,7 +69,6 @@ trafficApp.controller('VideoController', ['$scope',
     $scope.complaintService     =   complaintService;
 
     videoService.getVideos(function(vids) {
-        $log.log(vids);
         $scope.videos           =   vids;
     });
 
@@ -99,7 +98,7 @@ trafficApp.controller('VideoController', ['$scope',
         var vid                 =   {};
         vid["videoURL"]         =   $scope.newVid.videoURL;
         vid["thumbURL"]         =   $scope.newVid.videoURL;
-        vid["uploadedBy"]       =   userService.user.email;
+        vid["uploadedBy"]       =   userService.user.userName;;
         vid["analyzedBy"]       =   "";
         vid["locality"]         =   $scope.newVid.locality;
         vid["town"]             =   $scope.newVid.town;
@@ -116,7 +115,7 @@ trafficApp.controller('VideoController', ['$scope',
         var videoID             =   youtubeService.getVideoID(vid['videoURL']);
         youtubeService.getVideoDuration(videoID, function(duration) {
             userService.awardPoint(userService.user.email, duration, function(data) {
-               console.log(data);
+               //console.log(data);
             }); 
         });
     };

@@ -9,11 +9,5 @@ trafficApp.controller('LeaderboardController', ['$scope', '$http', '$log', 'lead
     };
     $scope.clicker(0);
 
-    $scope.upload = function() {
-    };
-
-    $scope.addNewVideo = function() {
-    };
-
 }]);
 

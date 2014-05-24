@@ -30,7 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         awardPoint($host, $username, $password, $db_name);
     }
 } else {
-    die('invalid request');
+    getUsers($host, $username, $password, $db_name);
 }
 
 function loginUser($host, $username, $password, $db_name) {
@@ -47,7 +47,9 @@ function loginUser($host, $username, $password, $db_name) {
 
     if(mysql_num_rows($dbResult)){
         $row        =   mysql_fetch_array($dbResult, MYSQL_ASSOC);
-        $result     =   array('message' => 'existingUser', 'points' => $row['points'] );
+        $result     =   array('message' => 'existingUser', 
+                                'points' => $row['points'], 
+                                'userName' => $row['userName'] );
     } else {
         $sql        =   "INSERT INTO user (email, name) VALUES ('" . $obj->email . "','" . $obj->name . "')";
         $db_insert  =   mysql_query($sql);
@@ -82,6 +84,32 @@ function awardPoint($host, $username, $password, $db_name) {
     } else {
         $json       =   array();
         $json['awarded'] = 'yes';
+        echo json_encode($json);
+    }
+
+    mysql_close($db);
+
+}
+
+function getUsers($host, $username, $password, $db_name) {
+
+    $db             =   mysql_connect($host, $username, $password) or die('Could not connect');
+    mysql_select_db($db_name, $db) or die('');
+
+    $json           =   file_get_contents('php://input');
+    $obj            =   json_decode($json);
+
+    $sql            =   "SELECT userName, email, name, points FROM user WHERE points > 0 ORDER BY points DESC";
+
+    $dbResult       =   mysql_query($sql);
+    $json           =   array();
+
+    if (!$dbResult) {
+        die('Could not connect - event insert failed: ' . mysql_error());
+    } else {
+        while($row=mysql_fetch_array($dbResult, MYSQL_ASSOC)) {
+            $json[] =   $row;
+        }
         echo json_encode($json);
     }
 
