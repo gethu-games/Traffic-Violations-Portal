@@ -39,7 +39,7 @@ function insertVideo($host, $username, $password, $db_name, $whiteList) {
     $obj            =   json_decode($json);
     //print_r($obj);
 
-    var_dump($whiteList);
+    /*
     if (!in_array($obj->uploadedBy, $whiteList)) {
         $json       =   array();
         $json['error'] = 'not authorized';
@@ -47,6 +47,7 @@ function insertVideo($host, $username, $password, $db_name, $whiteList) {
         mysql_close($db);
         return;
     }
+     */
 
     $sql            =   "INSERT INTO video (videoURL, thumbURL, uploadedBy, analyzedBy, locality, town, city, pincode, time) VALUES ( '" . $obj->videoURL . "','" . $obj->thumbURL . "','" . $obj->uploadedBy . "','" . $obj->analyzedBy . "','" . $obj->locality . "','" . $obj->town . "','" . $obj->city . "'," . $obj->pincode . ",'" . $obj->time . "')";
     //echo ($sql);

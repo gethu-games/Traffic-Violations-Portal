@@ -38,6 +38,7 @@ function insertComplaint($host, $username, $password, $db_name, $whiteList) {
     $json           =   file_get_contents('php://input');
     $obj            =   json_decode($json);
 
+    /*
     if (!in_array($obj->analyzedBy, $whiteList)) {
         $json       =   array();
         $json['error'] = 'not authorized';
@@ -45,6 +46,7 @@ function insertComplaint($host, $username, $password, $db_name, $whiteList) {
         mysql_close($db);
         return;
     }
+     */
 
     $sql            =   "INSERT INTO complaint (videoID, vehicleRegNo, vehicleType, violationType, timeSlice, analyzedBy) VALUES ( '" . $obj->videoID . "','" . $obj->vehicleRegNo . "','" . $obj->vehicleType . "','" . $obj->violationType . "','" . $obj->timeSlice . "','" . $obj->analyzedBy . "')";
 

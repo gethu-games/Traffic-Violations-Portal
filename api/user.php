@@ -51,7 +51,7 @@ function loginUser($host, $username, $password, $db_name) {
                                 'points' => $row['points'], 
                                 'userName' => $row['userName'] );
     } else {
-        $sql        =   "INSERT INTO user (email, name) VALUES ('" . $obj->email . "','" . $obj->name . "')";
+        $sql        =   "INSERT INTO user (email, name, userName) VALUES ('" . $obj->email . "','" . $obj->name . "','" . $obj->name . "')";
         $db_insert  =   mysql_query($sql);
 
         if (!$db_insert) {
