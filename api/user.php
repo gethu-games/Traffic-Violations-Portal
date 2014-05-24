@@ -27,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ( strcmp($obj->method, 'login') == 0 ) {
         loginUser($host, $username, $password, $db_name);
     } else if ( strcmp($obj->method, 'awardPoint') == 0 ) {
-        awardPoint($host, $username, $password, $db_name);
+        awardPoint($host, $username, $password, $db_name, $uploaderList, $analyzerList);
     }
 } else {
     getUsers($host, $username, $password, $db_name);
@@ -51,7 +51,7 @@ function loginUser($host, $username, $password, $db_name) {
                                 'points' => $row['points'], 
                                 'userName' => $row['userName'] );
     } else {
-        $sql        =   "INSERT INTO user (email, name) VALUES ('" . $obj->email . "','" . $obj->name . "')";
+        $sql        =   "INSERT INTO user (email, name, userName) VALUES ('" . $obj->email . "','" . $obj->name . "','" . $obj->name . "')";
         $db_insert  =   mysql_query($sql);
 
         if (!$db_insert) {
@@ -67,7 +67,7 @@ function loginUser($host, $username, $password, $db_name) {
 
 }
 
-function awardPoint($host, $username, $password, $db_name) {
+function awardPoint($host, $username, $password, $db_name, $upList, $analyzeList) {
 
     $db             =   mysql_connect($host, $username, $password) or die('Could not connect');
     mysql_select_db($db_name, $db) or die('');
@@ -75,7 +75,16 @@ function awardPoint($host, $username, $password, $db_name) {
     $json           =   file_get_contents('php://input');
     $obj            =   json_decode($json);
 
-    $sql            =   "update user set points = points + " . $obj->points . " where email='" . $obj->email . "'";
+    if (!in_array($obj->email, $upList) && !in_array($obj->email, $upList))  {
+        $json       =   array();
+        $json['error'] = 'not authorized';
+        echo json_encode($json);
+        mysql_close($db);
+        return;
+    }
+
+
+    $sql            =   "update user set points = points + " . $obj->points . " where userName='" . $obj->userName . "'";
 
     $dbResult       =   mysql_query($sql);
 

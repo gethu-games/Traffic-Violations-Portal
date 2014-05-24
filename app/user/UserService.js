@@ -80,12 +80,12 @@ TrafficApp.service('UserService', ['$http', '$log', '$rootScope', function($http
 
         },
 
-        awardPoint: function(email, point, callback) {
+        awardPoint: function(userName, point, callback) {
 
             $http({
                 url: 'api/user.php',
                 method: "POST",
-                data: {'method': 'awardPoint', 'points': point, 'email': email},
+                data: {'method': 'awardPoint', 'points': point, 'userName': userName},
                 headers: {'Content-Type': 'application/json'}
             }).success(function (data, status, headers, config) {
                 callback(data);

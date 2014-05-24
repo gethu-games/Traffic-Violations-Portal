@@ -73,7 +73,7 @@ trafficApp.controller('ComplaintController', ['$scope',
         console.log('point ' + point);
         
         // award point to Analyzer
-        userService.awardPoint(userService.user.email, point, function(data) {
+        userService.awardPoint(userService.user.userName, point, function(data) {
            console.log(data);
         }); 
 

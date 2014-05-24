@@ -39,7 +39,6 @@ function insertVideo($host, $username, $password, $db_name, $whiteList) {
     $obj            =   json_decode($json);
     //print_r($obj);
 
-    var_dump($whiteList);
     if (!in_array($obj->uploadedBy, $whiteList)) {
         $json       =   array();
         $json['error'] = 'not authorized';
