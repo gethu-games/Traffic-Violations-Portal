@@ -74,12 +74,12 @@ trafficApp.controller('ComplaintController', ['$scope',
         
         // award point to Analyzer
         userService.awardPoint(userService.user.userName, point, function(data) {
-           console.log(data);
+           //console.log(data);
         }); 
 
         // award a fraction of points to Uploader
         userService.awardPoint($scope.video.uploadedBy, point * 0.1, function(data) {
-           console.log(data);
+           //console.log(data);
         }); 
     };
 

@@ -75,7 +75,7 @@ function awardPoint($host, $username, $password, $db_name, $upList, $analyzeList
     $json           =   file_get_contents('php://input');
     $obj            =   json_decode($json);
 
-    if (!in_array($obj->email, $upList) && !in_array($obj->email, $upList))  {
+    if (!in_array($obj->userName, $upList) && !in_array($obj->userName, $analyzeList))  {
         $json       =   array();
         $json['error'] = 'not authorized';
         echo json_encode($json);

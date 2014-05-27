@@ -90,6 +90,7 @@ TrafficApp.service('UserService', ['$http', '$log', '$rootScope', function($http
             }).success(function (data, status, headers, config) {
                 callback(data);
                 $rootScope.$broadcast('user:updated');
+                //console.log(data);
             }).error(function (data, status, headers, config) {
                 callback(data);
             });

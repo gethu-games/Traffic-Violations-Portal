@@ -11,7 +11,7 @@
         <tr ng-repeat="item in rawComplaints">
             <td>{{item.vehicleRegNo}}</td>
             <td>{{item.vehicleType}}</td>
-            <td>{{item.violationType}}</td>
+            <td>{{complaint.type[item.violationType]}}</td>
             <td>{{item.timeSlice}}</td>
         </tr>
     </table>
