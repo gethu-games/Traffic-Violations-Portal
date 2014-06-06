@@ -25,6 +25,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     insertComplaint($host, $username, $password, $db_name, $analyzerList);
 } else if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     returnComplaints($host, $username, $password, $db_name);
+} else if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
+    echo ("hi delete called");
+    //deleteComplaint($host, $username, $password, $db_name);
 }
 
 
@@ -48,7 +51,7 @@ function insertComplaint($host, $username, $password, $db_name, $whiteList) {
 
     $sql            =   "INSERT INTO complaint (videoID, vehicleRegNo, vehicleType, violationType, timeSlice, analyzedBy) VALUES ( '" . $obj->videoID . "','" . $obj->vehicleRegNo . "','" . $obj->vehicleType . "','" . $obj->violationType . "','" . $obj->timeSlice . "','" . $obj->analyzedBy . "')";
 
-    echo($sql);
+    //echo($sql);
 
     $db_insert      =   mysql_query($sql);
 
@@ -83,6 +86,36 @@ function returnComplaints($host, $username, $password, $db_name) {
     }
 
     echo json_encode($json);
+
+    mysql_close($db);
+
+}
+
+function deleteComplaint($host, $username, $password, $db_name) {
+
+    echo('delete');
+
+    $db             =   mysql_connect($host, $username, $password) or die('Could not connect');
+    mysql_select_db($db_name, $db) or die('');
+
+    $json           =   file_get_contents('php://input');
+    $obj            =   json_decode($json);
+
+    print_r($obj);
+
+    $sql            =   "DELETE FROM complaint WHERE ID=" . $obj->ID;
+
+    print_r($sql);
+
+    $db_delete      =   mysql_query($sql);
+
+    if (!$db_delete) {
+        die('Could not connect - event insert failed: ' . mysql_error());
+    } else {
+        $json       =   array();
+        $json['message'] = "success";
+        echo json_encode($json);
+    }
 
     mysql_close($db);
 

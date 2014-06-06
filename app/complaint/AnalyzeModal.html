@@ -13,6 +13,7 @@
             <td>{{item.vehicleType}}</td>
             <td>{{complaint.type[item.violationType]}}</td>
             <td>{{item.timeSlice}}</td>
+            <td><input type="button" value="-" ng-show="userService.user.userName === item.analyzedBy" class="btn-primary" ng-click="deleteComplaint(item, video)"></td>
         </tr>
     </table>
     <form ng-submit="addNewComplaint()">

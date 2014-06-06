@@ -34,6 +34,8 @@ trafficApp.controller('ComplaintController', ['$scope',
      */
     $scope.complaint            =   complaintService;
 
+    $scope.userService          =   userService;
+
     /**
      * current video for which analyze phase is being done
      */
@@ -81,6 +83,25 @@ trafficApp.controller('ComplaintController', ['$scope',
         userService.awardPoint($scope.video.uploadedBy, point * 0.1, function(data) {
            //console.log(data);
         }); 
+    };
+
+    $scope.deleteComplaint      =   function(complaint, video) {
+
+        complaintService.deleteComplaint(complaint.ID);
+        var point               =   -complaintService.points[parseInt(complaint.violationType)];
+
+        console.log('point ' + point);
+        
+        // award point to Analyzer
+        userService.awardPoint(userService.user.userName, point, function(data) {
+           //console.log(data);
+        }); 
+
+        // award a fraction of points to Uploader
+        userService.awardPoint(video.uploadedBy, point * 0.1, function(data) {
+           //console.log(data);
+        }); 
+
     };
 
 }]);

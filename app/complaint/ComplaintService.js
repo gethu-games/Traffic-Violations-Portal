@@ -135,6 +135,8 @@ trafficApp.service('ComplaintService', ['$http', function($http) {
          */
         addNewComplaint: function(complaint) {
 
+            console.log('complaint add new');
+            console.log(complaint);
             var json            =   JSON.stringify(complaint);
 
             $http({
@@ -143,7 +145,32 @@ trafficApp.service('ComplaintService', ['$http', function($http) {
                 data:               json,
                 headers:            {'Content-Type': 'application/json'}
             }).success(function (data, status, headers, config) {
+                complaint['ID']=   data.complaintID;
             }).error(function (data, status, headers, config) {
+            });
+
+        },
+
+        /**
+         * deletes the complaint from DB, specified by the complaint id
+         * @params {int}        complaintID ID of the complaint to delete
+         */
+        deleteComplaint: function(complaintID) {
+
+            var json            =   JSON.stringify({"ID": complaintID});
+            console.log('delete complaint');
+            console.log(json);
+
+            $http({
+                url:                'api/complaint.php',
+                method:             "DELETE",
+                data:               json
+            }).success(function (data, status, headers, config) {
+                console.log('success delete complaint');
+                console.log(data);
+            }).error(function (data, status, headers, config) {
+                console.log('failuer delete complaint');
+                console.log(data);
             });
 
         },
