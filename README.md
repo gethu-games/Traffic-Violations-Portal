@@ -13,6 +13,7 @@ https://en.wikipedia.org/wiki/List_of_countries_by_traffic-related_death_rate
 3. Whereas our neighbour China is in 2nd position with 68,000 deaths.
 
 http://timesofindia.indiatimes.com/india/For-10th-year-in-a-row-Tamil-Nadu-tops-India-in-road-accidents/articleshow/20735444.cms
+
 1. For 10th year in a row, Tamil Nadu tops India in road accidents.
 
 
@@ -28,6 +29,7 @@ Reason?
 Solution
 --------
 What a Common Man can do? Million things. As the topmost person in the Democracy, a common man’s will can do anything (at least in theory). Hit directly at the `no care` attitude of the people. HOW?
+
 1. Take your smartphone, Capture videos of traffic violations happening in roads.
 2. Document the details of all captured violations by noting down the Vehicle Registration Number, Violation Type and such.
 3. We are not just capturing the violations done by the Public, but also we cover the Infrastructure problems like poor roads, broken signals, encroachments on road / pavements.
@@ -42,4 +44,4 @@ Are you ready to make the CHANGE Happen?
 visit www.trafficviolationportal.org (wont work now)
 (For now, its hosted @ http://grayfaceofindia.in/modules/traffic/)
 
-“Never doubt that a smgmall group of thoughtful, committed citizens can change the world; indeed, it's the only thing that ever has”
+*“Never doubt that a small group of thoughtful, committed citizens can change the world; indeed, it's the only thing that ever has”*
