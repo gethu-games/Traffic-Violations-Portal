@@ -132,7 +132,22 @@ along with ACR-Timeline-Infograph. If not, see <http://www.gnu.org/licenses/>.
                     <a href="{{vid.videoURL}}" target="_blank" style="float: left; display:inline"> <img src="{{vid.thumbURL}}" class="videoThumb"> </a>
                     <div style="float: left; overflow-x: auto; width: 640px; height: 100px; white-space: nowrap; display:inline">
                         <div ng-repeat="compl in vid.complaints">
-                            <div class="violationCard"> <b class="violationCount">{{compl.violations.length}}</b> {{complaintService.type[compl.violationType]}} </div>
+                            <!-- Flip Animation from http://davidwalsh.name/css-flip -->
+                            <div class="flip-container" ontouchstart="this.classList.toggle('hover');">
+                                 <div class="flipper"> 
+                                    <div class="front">
+                                        <div class="violationCard"> <b class="violationCount">{{compl.violations.length}}</b> {{complaintService.type[compl.violationType]}} </div>
+                                    </div>
+                                    <div class="back">
+                                        <table class="violationList"> 
+                                            <tr ng-repeat="citem in compl.violations" >
+                                                <td> {{citem.vehicleRegNo}} </td>
+                                                <td> - {{citem.vehicleType}} </td>
+                                            </tr>
+                                        </table>
+                                    </div> 
+                                </div>
+                            </div> <!-- End of flip-container -->
                         </div>
                     </div> 
                 </div>
