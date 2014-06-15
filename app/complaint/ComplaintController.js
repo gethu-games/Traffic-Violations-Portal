@@ -86,12 +86,28 @@ trafficApp.controller('ComplaintController', ['$scope',
     };
 
     $scope.deleteComplaint      =   function(complaint, video) {
+        
+        var index               =   $scope.video.rawComplaints.indexOf(complaint);
+        $scope.video.rawComplaints.splice(index, 1);
 
+        var complaintArray      =   $scope.video.complaints;
+        for (var k = 0; k < complaintArray.length; k++) {
+            if (complaintArray[k].violationType === complaint.violationType) {
+                var violations  =    complaintArray[k]['violations'];
+                console.log(violations);
+                for (var kk = 0; kk < violations.length; kk++) {
+                    if (violations.vehicleRegNo === complaint.vehicleRegNo) {
+                        violations.splice(kk, 1);
+                        break;
+                    }
+                }
+                break;
+            }
+        }
         complaintService.deleteComplaint(complaint.ID);
+
         var point               =   -complaintService.points[parseInt(complaint.violationType)];
 
-        console.log('point ' + point);
-        
         // award point to Analyzer
         userService.awardPoint(userService.user.userName, point, function(data) {
            //console.log(data);

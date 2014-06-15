@@ -26,8 +26,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 } else if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     returnComplaints($host, $username, $password, $db_name);
 } else if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
-    echo ("hi delete called");
-    //deleteComplaint($host, $username, $password, $db_name);
+    //echo ("hi delete called");
+    deleteComplaint($host, $username, $password, $db_name);
 }
 
 
@@ -51,8 +51,6 @@ function insertComplaint($host, $username, $password, $db_name, $whiteList) {
 
     $sql            =   "INSERT INTO complaint (videoID, vehicleRegNo, vehicleType, violationType, timeSlice, analyzedBy) VALUES ( '" . $obj->videoID . "','" . $obj->vehicleRegNo . "','" . $obj->vehicleType . "','" . $obj->violationType . "','" . $obj->timeSlice . "','" . $obj->analyzedBy . "')";
 
-    //echo($sql);
-
     $db_insert      =   mysql_query($sql);
 
     if (!$db_insert) {
@@ -60,6 +58,7 @@ function insertComplaint($host, $username, $password, $db_name, $whiteList) {
     } else {
         $json       =   array();
         $json['complaintID'] = mysql_insert_id();
+        updateVideoEntry($host, $username, $password, $db_name, $obj->videoID, $obj->analyzedBy);
         echo json_encode($json);
     }
 
@@ -93,19 +92,17 @@ function returnComplaints($host, $username, $password, $db_name) {
 
 function deleteComplaint($host, $username, $password, $db_name) {
 
-    echo('delete');
-
     $db             =   mysql_connect($host, $username, $password) or die('Could not connect');
     mysql_select_db($db_name, $db) or die('');
 
     $json           =   file_get_contents('php://input');
     $obj            =   json_decode($json);
 
-    print_r($obj);
+    //print_r($obj);
 
     $sql            =   "DELETE FROM complaint WHERE ID=" . $obj->ID;
 
-    print_r($sql);
+    //print_r($sql);
 
     $db_delete      =   mysql_query($sql);
 
@@ -115,6 +112,47 @@ function deleteComplaint($host, $username, $password, $db_name) {
         $json       =   array();
         $json['message'] = "success";
         echo json_encode($json);
+    }
+
+    mysql_close($db);
+
+}
+
+function updateVideoEntry($host, $username, $password, $db_name, $videoID, $analyzedBy) {
+
+    $db             =   mysql_connect($host, $username, $password) or die('Could not connect');
+    mysql_select_db($db_name, $db) or die('');
+
+    $sql            =   "SELECT analyzedBy FROM video WHERE videoID=" . $videoID;
+
+    $db_result      =   mysql_query($sql);
+
+    //echo ($videoID);
+    //echo($analyzedBy);
+
+    if (!$db_result) {
+        die('Could not connect - event insert failed: ' . mysql_error());
+    } else {
+        if ($row=mysql_fetch_array($db_result, MYSQL_ASSOC)) {
+            $analyzeArr         =   explode(",", $row['analyzedBy']);
+            //print_r($analyzeArr);
+            $found              =   false;
+            for ($x = 0; $x < count($analyzeArr); $x++) {
+                if ($analyzeArr[$x] === $analyzedBy) {
+                    $found       =   true;
+                    break;
+                }
+            }
+            if ($found == false) {
+                $analyzerNew    =   $row['analyzedBy'] . $analyzedBy . ",";
+                $ssql           =   "UPDATE video SET analyzedBy = '" . $analyzerNew . "' WHERE videoID = " . $videoID;
+                //echo($ssql);
+                mysql_query($ssql);
+            }
+            $json   =   array();
+            $json['message'] = "success";
+            echo json_encode($json);
+        }
     }
 
     mysql_close($db);
